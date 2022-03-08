@@ -1,0 +1,34 @@
+@api = http://localhost:3001
+
+POST {{api}}/agregar/proveedor HTTP/1.1
+content-type: application/json
+
+{
+    "supplie_name": "Telas del Centro",
+    "idBusinessType_Sup": 1
+}
+
+### 
+POST {{api}}/agregar/producto HTTP/1.1
+content-type: application/json
+
+{
+    "productName": "Boton de Camisa",
+    "description_product": "Boton para camisa metalico",
+    "idTechnology_Pro": 3
+}
+
+###
+GET {{api}}/proveedores HTTP/1.1
+
+###
+GET {{api}}/proveedores/15 HTTP/1.1
+
+###
+GET {{api}}/proveedores/18/productos HTTP/1.1
+
+###
+GET {{api}}/productos HTTP/1.1
+
+###
+GET {{api}}/productos/5/proveedores HTTP/1.1
