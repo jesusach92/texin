@@ -1,0 +1,10 @@
+insert into technologies (nameTechnology) values ('Boa constrictor mexicana');
+insert into technologies (nameTechnology) values ('Alcelaphus buselaphus cokii');
+insert into technologies (nameTechnology) values ('Felis chaus');
+insert into technologies (nameTechnology) values ('Dasypus novemcinctus');
+insert into technologies (nameTechnology) values ('Numida meleagris');
+insert into technologies (nameTechnology) values ('Cochlearius cochlearius');
+insert into technologies (nameTechnology) values ('Varanus sp.');
+insert into technologies (nameTechnology) values ('Helogale undulata');
+insert into technologies (nameTechnology) values ('Panthera pardus');
+insert into technologies (nameTechnology) values ('Laniarius ferrugineus');

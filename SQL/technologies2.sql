@@ -1,0 +1,10 @@
+insert into technologies (nameTechnology) values ('Tamiasciurus hudsonicus');
+insert into technologies (nameTechnology) values ('Felis concolor');
+insert into technologies (nameTechnology) values ('Corallus hortulanus cooki');
+insert into technologies (nameTechnology) values ('Bison bison');
+insert into technologies (nameTechnology) values ('Oreamnos americanus');
+insert into technologies (nameTechnology) values ('Paroaria gularis');
+insert into technologies (nameTechnology) values ('unavailable');
+insert into technologies (nameTechnology) values ('Callorhinus ursinus');
+insert into technologies (nameTechnology) values ('Vulpes chama');
+insert into technologies (nameTechnology) values ('Uraeginthus granatina');
