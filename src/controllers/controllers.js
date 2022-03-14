@@ -2,13 +2,13 @@ import { connect } from '../database/database';
 
 export const supplielist = async (req, res) => {
     const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supplie");
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN adress_supplie t3 JOIN contact_supplies t4 ON t1.idBusinessType_Sup = t2.idbusinessType AND t1.id_supplie = t3.idSupplieAd AND t3.id_adress = t4.id_AdressCont WHERE t3.adress_principal = 1 AND t4.contact_principal =1 ORDER BY t1.id_supplie;");
     res.json(rows);
 }
 
 export const productlist = async (req, res) => {
     const db= await connect();
-    const [rows] = await db.query("SELECT * FROM products");
+    const [rows] = await db.query("SELECT * FROM products t1 JOIN technologies t2 ON t1.idTechnology_Pro = t2.id_technology;");
     res.json(rows);
 }
 
