@@ -2,7 +2,7 @@ import { connect } from '../database/database';
 
 export const supplielist = async (req, res) => {
     const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN adress_supplie t3 JOIN contact_supplies t4 ON t1.idBusinessType_Sup = t2.idbusinessType AND t1.id_supplie = t3.idSupplieAd AND t3.id_adress = t4.id_AdressCont WHERE t3.adress_principal = 1 AND t4.contact_principal =1 ORDER BY t1.id_supplie;");
+    const [rows] = await db.query("SELECT * FROM supplies.supplie t1 JOIN adress_supplie t2 JOIN contact_supplies t3 ON t1.id_supplie = t2.idSupplieAd AND t2.id_adress = t3.id_AdressCont WHERE t1.id_supplie=2 AND t3.contact_principal=1 ORDER BY t2.adress_principal DESC;");
     res.json(rows);
 }
 
@@ -14,7 +14,7 @@ export const productlist = async (req, res) => {
 
 export const getsuppliebyid = async (req, res) => {
     const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supplie WHERE id_supplie = ?",[
+    const [rows] = await db.query("SELECT * FROM supplies.supplie t1 JOIN adress_supplie t2 ON t1.id_supplie = t2.idSupplieAd WHERE t1.id_supplie=? ORDER BY t2.adress_principal DESC;",[
         req.params.id]);
     res.json(rows);
 }
