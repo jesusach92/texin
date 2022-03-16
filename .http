@@ -25,10 +25,10 @@ GET {{api}}/proveedores HTTP/1.1
 GET {{api}}/proveedores/15 HTTP/1.1
 
 ###
-GET {{api}}/proveedores/18/productos HTTP/1.1
+GET {{api}}/proveedores/productos/1 HTTP/1.1
 
 ###
 GET {{api}}/productos HTTP/1.1
 
 ###
-GET {{api}}/productos/5/proveedores HTTP/1.1
+GET {{api}}/productos/proveedores/3 HTTP/1.1

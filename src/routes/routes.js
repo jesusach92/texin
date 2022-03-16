@@ -10,11 +10,11 @@ router.get('/productos', productlist);
 
 router.get('/proveedores/:id', getsuppliebyid);
 
-router.get('/proveedores/:id/productos',getproductsbysupplie);
+router.get('/proveedores/productos/:id',getproductsbysupplie);
 
 router.get('/productos/:id',getproductbyid);
 
-router.get('/productos/:id/proveedores', getsuppliebyproduct);
+router.get('/productos/proveedores/:id', getsuppliebyproduct);
 
 router.post('/agregar/producto', addproduct);
 
