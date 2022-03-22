@@ -73,3 +73,5 @@ export const addproduct = async (req, res) => {
     });
     db.end()
 }
+
+// Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),   
