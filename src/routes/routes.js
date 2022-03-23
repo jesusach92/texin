@@ -1,23 +1,25 @@
 import { Router } from 'express';
-import { productlist, supplielist, addproduct, addsupplie, getsuppliebyid, 
-    getproductbyid, getproductsbysupplie, getsuppliebyproduct } from '../controllers/controllers'
+import { supplielist, supplieById, suppliPrincipalAdress, 
+    supplieFullAdress, adressContact, supplieContacts, 
+    supplieProducts, addSupplie } 
+from '../controllers/controllers'
 
 const router = Router();
 
 router.get('/proveedores', supplielist);
 
-router.get('/productos', productlist);
+router.get('/proveedor/:id', supplieById)
 
-router.get('/proveedores/:id', getsuppliebyid);
+router.get('/proveedor/domicilios/principal/:id', suppliPrincipalAdress)
 
-router.get('/proveedores/productos/:id',getproductsbysupplie);
+router.get('/proveedor/domicilios/:id', supplieFullAdress)
 
-router.get('/productos/:id',getproductbyid);
+router.get('/proveedor/domicilio/contactos/:id', adressContact)
 
-router.get('/productos/proveedores/:id', getsuppliebyproduct);
+router.get('/proveedor/contactos/:id',supplieContacts)
 
-router.post('/agregar/producto', addproduct);
+router.get('/proveedor/productos/:id', supplieProducts)
 
-router.post('/agregar/proveedor',addsupplie);
+router.post('/agregar/proveedor', addSupplie)
 
 export default router;

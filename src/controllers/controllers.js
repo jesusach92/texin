@@ -1,77 +1,183 @@
+import req from 'express/lib/request';
+import res from 'express/lib/response';
 import { connect } from '../database/database';
 
-// Listar proveedores con contacto y domicilio principal
+
+/* Metodos de los Proveedores
+1.-Listar proveedores con contacto y domicilio principal
+
+2.-Obtener Proveedor por Id
+3.-Obtener el Domicilio principal
+4.-Obtener los domicilios del proveedor
+5.-Obtener los contactos del domicilio 
+6.-Obtener todos los contactos del proveedor
+7.-Obtener todos los productos que el proveedor tiene registrados
+
+8.-Agregar Proveedor
+9.-Agregar Domicilio a proveedor
+10.-Agregar Contacto a Domicilio de Proveedor
+11.-Agregar Producto a Proveedor: creando un nuevo producto para el proveedor
+12.-Asignar Producto a Proveedor: siempre y cuando el producto ya exista
+
+13.-Editar Domicilio
+14.-Editar Contacto
+15.-Editar Proveedor
+16.-Editar Relacion Proveedor Producto
+
+17.-Eliminar Contacto, si es contacto principal lanzar advertencia y asignar un nuevo contacto principal antes de borrar el anterior
+Si no existe ningún otro contacto lanzar advertencia que se eliminara el domicilio, si no existe ningún otro domicilio lanzar advertencia
+que se eliminara el contacto y todos los productos que tenga asignados, dar opción de agregar nuevo contacto al domicilio y opción si es 
+el único domicilio agregar nuevo domicilio.
+
+18.-Eliminar Domicilio, si es el domicilio principal lanzar advertencia y asignar nuevo domicilio principal antes de borrar el anterior
+si no existe ninguno otro domicilio lanzar advertencia que se eliminara el proveedor y todos los productos asignados a el, 
+dar opción de agregar domicilio.
+
+19.-Eliminar Producto, elimina la relación del proveedor con el producto si no hay más productos del proveedor se lanza advertencia que un 
+proveedor siempre debe tener un producto asignado de lo contrario se eliminara el proveedor, dar opción de agregar o asignar nuevo producto
+
+20.-Eliminar Proveedor, eliminar por completo todos los datos relacionados con el proveedor, domicilios, contactos, productos que tenga asignados.
+*/
+
+// 1.- Listar proveedores con contacto y domicilio principal
 export const supplielist = async (req, res) => {
     const db= await connect();
     const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN adress_supplie t3 JOIN contact_supplies t4 ON t1.idBusinessType_Sup = t2.idbusinessType AND t1.id_supplie = t3.idSupplieAd AND t3.id_adress = t4.id_AdressCont WHERE t3.adress_principal = 1 AND t4.contact_principal =1 ORDER BY t1.id_supplie;");
     res.json(rows);
     db.end()
 }
-// Listar Productos
-export const productlist = async (req, res) => {
-    const db= await connect();
-    const [rows] = await db.query("SELECT * FROM products t1 JOIN technologies t2 ON t1.idTechnology_Pro = t2.id_technology;");
+
+// 2.-Obtener Proveedor por Id
+
+export const supplieById = async (req, res) =>{
+    const db = await connect()
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 ON  t1.idBusinessType_Sup = t2.idbusinessType WHERE t1.id_supplie= ?;",[
+        req.params.id
+    ])
     res.json(rows)
     db.end()
 }
-// Obtener Domicilios de Proveedores con contacto principal
-export const getsuppliebyid = async (req, res) => {
-    const db= await connect();
-    const [rows] = await db.query("select * from supplie t1 join businesstype t2 join adress_supplie t3 join contact_supplies t4 on t1.idBusinessType_Sup = t2.idbusinessType and t1.id_supplie = t3.idSupplieAd and t3.id_adress = t4.id_AdressCont where t1.id_supplie= ? AND t4.contact_principal =1 ORDER BY t3.adress_principal DESC;",[
-        req.params.id]);
-    res.json(rows);
-    db.end()
-}
 
-//Productos por Proveedor
-export const getproductsbysupplie = async (req, res) => {
-    const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supply t1 JOIN products t2 JOIN supplie t3 ON t1.idProduct_spy= t2.id_product  AND t1.idSupplie_spy = t3.id_supplie  WHERE t1.idSupplie_spy = ?;",[
+//3.-Obtener el Domicilio principal
+
+export const suppliPrincipalAdress = async (req, res) =>
+{
+    const db = await connect()
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN adress_supplie t3 ON t1.idBusinessType_Sup = t2.idbusinessType AND t1.id_supplie = t3.idSupplieAd WHERE t3.adress_principal=1 AND t1.id_supplie= ?;",[
         req.params.id
     ])
-    res.json(rows);
+    res.json(rows)
     db.end()
 }
 
-export const getproductbyid = async (req, res) => {
-    const db= await connect();
-    const [rows] = await db.query("SELECT * FROM products WHERE id_product = ?",[
-        req.params.id]);
-    res.json(rows);
+//4.-Obtener los domicilios del proveedor
+
+export const supplieFullAdress = async (req, res)=>
+{
+    const db=await connect()
+    const [rows]= await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN adress_supplie t3 ON t1.idBusinessType_Sup = t2.idbusinessType AND t1.id_supplie = t3.idSupplieAd WHERE t1.id_supplie= ?;",[
+        req.params.id
+    ])
+    res.json(rows)
     db.end()
 }
 
-//Obtener Proveedores del Producto ID
-export const getsuppliebyproduct = async (req, res) => {
-    const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supply t1 JOIN products t2 JOIN supplie t3 JOIN technologies t4 ON t1.idProduct_spy = t2.id_product AND t2.idTechnology_Pro = t4.id_technology AND t1.idSupplie_spy = t3.id_supplie WHERE t1.idProduct_spy = ? ORDER BY t1.delivery_time and t1.price DESC;",[
-    req.params.id]);
-    res.json(rows);
+//5.-Obtener los contactos del domicilio 
+
+export const adressContact = async (req, res)=>
+{
+    const db=await connect()
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN adress_supplie t3 JOIN contact_supplies t4 ON t1.idBusinessType_Sup = t2.idbusinessType AND t1.id_supplie = t3.idSupplieAd AND t3.id_adress = t4.id_AdressCont WHERE t3.id_adress = ? ORDER BY t4.contact_principal DESC;",[
+        req.params.id
+    ])
+    res.json(rows)
     db.end()
 }
 
-export const addsupplie = async (req, res) => {
-    const db= await connect();
-        const result = await db.query("INSERT INTO supplie (supplie_name, idBusinessType_Sup) VALUES (? , ?)",[
+//6.-Obtener todos los contactos del proveedor
+
+export const supplieContacts = async (req, res)=>
+{
+    const db= await connect()
+    const [rows]= await db.query("SELECT * FROM supplie t1 JOIN adress_supplie t2 JOIN contact_supplies t3 ON t1.id_supplie = t2.idSupplieAd AND t2.id_adress = t3.id_AdressCont WHERE t1.id_supplie =?;",[
+        req.params.id
+    ])
+    res.json(rows)
+    db.end()
+}
+
+//7.-Obtener todos los productos que el proveedor tiene registrados
+
+export const supplieProducts = async (req, res) =>
+{
+    const db= await connect()
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN supply t2 JOIN products t3 JOIN technologies t4 ON t1.id_supplie = t2.idSupplie_spy AND t2.idProduct_spy = t3.id_product AND t3.idTechnology_Pro = t4.id_technology WHERE t1.id_supplie=?;",[
+        req.params.id
+    ])
+    res.json(rows)
+    db.end()
+}
+
+//8.-Agregar Proveedor
+
+export const addSupplie = async (req, res) =>
+{
+    const db = await connect()
+    const [rows]=await db.query("INSERT INTO supplie (supplie_name, idBusinessType_Sup) VALUES (?, ?);",[
         req.body.supplie_name,
         req.body.idBusinessType_Sup
-    
-    ]);
+    ])
+    res.json(rows.insertId)
     db.end()
 }
-export const addproduct = async (req, res) => {
-    const db= await connect();
-    const [result] = await db.query("INSERT INTO products (productName, description_product, idTechnology_Pro) values(?,?,?)",[
-        req.body.productName,
-        req.body.description_product,
-        req.body.idTechnology_Pro
-    ]);
-    
-    res.json({
-        id: result.insertId,
-        ...req.body
-    });
-    db.end()
+
+//9.-Agregar Domicilio a proveedor
+
+export const addAdress = async (req, res) =>
+{
+    const db= await connect()
+    const [rows]= await db.query()
 }
+
+//10.-Agregar Contacto a Domicilio de Proveedor
+//11.-Agregar Producto a Proveedor: creando un nuevo producto para el proveedor
+//12.-Asignar Producto a Proveedor: siempre y cuando el producto ya exista
+
+//13.-Editar Domicilio
+//14.-Editar Contacto
+//15.-Editar Proveedor
+//16.-Editar Relacion Proveedor Producto
+
+/*17.-Eliminar Contacto, si es contacto principal lanzar advertencia y asignar un nuevo contacto principal antes de borrar el anterior
+Si no existe ningún otro contacto lanzar advertencia que se eliminara el domicilio, si no existe ningún otro domicilio lanzar advertencia
+que se eliminara el contacto y todos los productos que tenga asignados, dar opción de agregar nuevo contacto al domicilio y opción si es 
+el único domicilio agregar nuevo domicilio.
+*/
+
+/*18.-Eliminar Domicilio, si es el domicilio principal lanzar advertencia y asignar nuevo domicilio principal antes de borrar el anterior
+si no existe ninguno otro domicilio lanzar advertencia que se eliminara el proveedor y todos los productos asignados a el, 
+dar opción de agregar domicilio.
+*/
+/*19.-Eliminar Producto, elimina la relación del proveedor con el producto si no hay más productos del proveedor se lanza advertencia que un 
+proveedor siempre debe tener un producto asignado de lo contrario se eliminara el proveedor, dar opción de agregar o asignar nuevo producto
+*/
+
+//20.-Eliminar Proveedor, eliminar por completo todos los datos relacionados con el proveedor, domicilios, contactos, productos que tenga asignados.
+
+
+
+
+/*
+Metodos de Productos
+
+
+*/
+
+/*
+Metodos Generales de configuracion
+
+*/
+
+
 
 // Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),   
