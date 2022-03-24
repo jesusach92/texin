@@ -4,19 +4,16 @@
 GET {{api}}/proveedores HTTP/1.1
 
 ###
-GET {{api}}/proveedor/15 HTTP/1.1
-
-###
-GET {{api}}/proveedor/domicilios/principal/40 HTTP/1.1
+GET {{api}}/proveedor/2 HTTP/1.1
 
 ###
 GET {{api}}/proveedor/domicilios/2 HTTP/1.1
 
 ###
-GET {{api}}/proveedor/domicilio/contactos/1 HTTP/1.1
+GET {{api}}/proveedor/domicilio/contactos/3 HTTP/1.1
 
 ###
-GET {{api}}/proveedor/contactos/2 HTTP/1.1
+GET {{api}}/proveedor/contactos/1 HTTP/1.1
 
 ###
 GET {{api}}/proveedores/productos/1 HTTP/1.1
@@ -26,6 +23,47 @@ POST {{api}}/agregar/proveedor HTTP/1.1
 content-type: application/json
 
 {
-    "supplie_name":"Telas del centro",
-    "idBusinessType_Sup": 5    
+        "nameSupplie": "Botones Pancho",
+        "FkBusinessType": 2, 
+        "FkClasification": 1, 
+        "sDateInitial": "2022-03-22", 
+        "sDateUpdate": "2022-03-24"
+
+}
+
+###
+POST {{api}}/agregar/domicilio HTTP/1.1
+Content-Type: application/json
+
+{
+        "FkSupplieAd": 3,
+        "FkadressType": 2,
+        "adressCountry":"Mexico",
+        "adressState":"CDMX",
+        "adressDescription":"Jesús María, Centro Histórico de la Cdad. de México, Centro, Cuauhtémoc, 06000 Ciudad de México, CDMX",
+        "aComments":"Domicilio Principal para contactar a proveedor"
+}
+
+###
+POST {{api}}/agregar/contacto HTTP/1.1
+Content-Type: application/json
+
+{
+        "FkAdressCont": 2, 
+        "nameContact": "Benjamín Garcia Vazquez", 
+        "workposition":"Gerente", 
+        "officeNumber": "4137206820", 
+        "cellphoneNumber": "9426363610", 
+        "comments": "Encargado de Ventas, con el realizar los pedidos y pedir numero de almacen y orden de envio"
+}
+
+
+### Metodos de Productos
+POST {{api}}/agregar/producto HTTP/1.1
+Content-Type: application/json
+
+{
+        "FkTechnologyPro": 1, 
+        "productName": "Tela retardante al fuego", 
+        "descriptionProduct":"Tela ignifuga hasta por 40 segundos"
 }
