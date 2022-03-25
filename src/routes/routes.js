@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { supplielist, supplieById, suppliPrincipalAdress, 
+import { supplielist, supplieById, 
     supplieFullAdress, adressContact, supplieContacts, 
-    supplieProducts, addSupplie, addAdress, addContact, addProduct } 
+    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply } 
 from '../controllers/controllers'
 
 const router = Router();
@@ -34,6 +34,26 @@ router.post('/agregar/domicilio',addAdress)
 
 //Agrega contacto a Domicilio Devulve el Id del contacto
 router.post('/agregar/contacto',addContact)
+
+//Asigna un producto que ya existe a un proveedor 
+
+router.post('/Asignar/Producto', AsingProductSupplie)
+
+
+// Metodos de Actualizacion de Proveedores
+//Actualiza el Domicilio y la fecha de Actualizacion del proveedor
+router.put('/Actualizar/Domicilio',EditAdress)
+
+// Actualiza el Contancto y la fecha de Actualizacion del Proveedor
+router.put('/Actualizar/Contacto',EditContact)
+
+// Actualiza los datos del proveedor y Fecha de Modificacion
+
+router.put('/Actualizar/Proveedor',EditSupplie)
+
+// Actualiza la relacion entre proveedor y Producto
+
+router.put('/Actualizar/Relacion',EditSupply)
 
 // Metodos de Productos
 

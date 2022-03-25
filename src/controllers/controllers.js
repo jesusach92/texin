@@ -1,10 +1,8 @@
-import req from 'express/lib/request';
-import res from 'express/lib/response';
 import { connect } from '../database/database';
 
 
 /* Metodos de los Proveedores
-1.-Listar proveedores con contacto y domicilio principal
+1.-Listar proveedores con tipo de negocio y tipo de proveedor
 
 2.-Obtener Proveedor por Id
 3.-Obtener los domicilios del proveedor
@@ -37,10 +35,10 @@ proveedor siempre debe tener un producto asignado de lo contrario se eliminara e
 18.-Eliminar Proveedor, eliminar por completo todos los datos relacionados con el proveedor, domicilios, contactos, productos que tenga asignados.
 */
 
-// 1.- Listar proveedores con contacto y domicilio principal
+// 1.- Listar proveedores con el tipo de negocio y el tipo de proveedor que son
 export const supplielist = async (req, res) => {
     const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN sclasification t2 JOIN businesstype t3 JOIN adresssupplie t4  JOIN contactsupplies t5 JOIN adresstype t6 ON t1.FkClasification = t2.idClasification  AND t1.FkBusinessType = t3.idBusinessType  AND t1.idSupplie = t4.FkSupplieAd AND t4.FkadressType = t6.idadressType  AND t4.idAdress = t5.FkAdressCont WHERE t4.adressPrincipal =1 AND t5.contactPrincipal =1 ORDER BY t1.idSupplie;");
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification;");
     if(!rows)
     {res.send("No hay proveedores Registrados")}
     else{res.json(rows)}
@@ -110,7 +108,9 @@ export const supplieProducts = async (req, res) =>
     const [rows] = await db.query("SELECT * FROM supply t1 JOIN products t2 JOIN technologies t3 ON t1.FkProductSpy = t2.idProduct AND t2.FkTechnologyPro = t3.idTechnology WHERE t1.FkSupplieSpy=?;",[
         req.params.id
     ])
-    res.json(rows)
+	 if(!rows.length)
+	 {res.send("El proveedor no tiene productos Asignados")}
+	 else{res.json(rows)}
     db.end()
 }
 
@@ -118,7 +118,8 @@ export const supplieProducts = async (req, res) =>
 
 export const addSupplie = async (req, res) =>
 {
-    const db = await connect()
+	const db = await connect()
+	try{
     const [rows]=await db.query("INSERT INTO supplie (nameSupplie, FkBusinessType, FkClasification, sDateInitial, sDateUpdate) VALUES (?, ?, ?, ?, ?); ",[
         req.body.nameSupplie,
         req.body.FkBusinessType, 
@@ -127,7 +128,11 @@ export const addSupplie = async (req, res) =>
         req.body.sDateUpdate
     ])
     res.json(rows.insertId)
-    db.end()
+   }
+	catch (e){
+		res.json("El Nombre del Proveedor ya se encuentra registrado")
+	}
+	 db.end()
 }
 
 //8.-Agregar Domicilio a proveedor
@@ -186,18 +191,110 @@ export const addContact = async (req, res) =>
 export const AsingProductSupplie = async (req, res) =>
 {
     const db= await connect()
-    const [rows]= await db.query("",[
-
+	 let [rows] =[]
+    const [Asing]= await db.query("SELECT * FROM supply WHERE FkSupplieSpy=? AND FkProductSpy =?;",[
+        req.body.FkSupplieSpy,
+        req.body.FkProductSpy
     ])
-    res.json(rows.insertId)
+    if(!Asing.length){
+		[rows]= await db.query("INSERT INTO supply (FkSupplieSpy, FkProductSpy, price, deliveryTime, productLine, comments, pDateInitial, pDateUpdate, pSampleF, pSampleLocation) VALUES (?,?,?,?,?,?,?,?,?,?);",[
+			req.body.FkSupplieSpy, 
+			req.body.FkProductSpy, 
+			req.body.price, 
+			req.body.deliveryTime, 
+			req.body.productLine, 
+			req.body.comments, 
+			req.body.pDateInitial, 
+			req.body.pDateUpdate, 
+			req.body.pSampleF, 
+			req.body.pSampleLocation
+			
+		])
+		res.json(rows.insertId)
+    }
+    else{res.send("Lo siento este producto ya está asignado al proveedor si quieres modificarlo presiona la opcion editar")}
     db.end()
 }
 
 
 //11.-Editar Domicilio
+
+export const EditAdress = async (req, res)=>
+{
+	const db = await connect()
+	const [rows] = await db.query("UPDATE adresssupplie  INNER JOIN supplie ON FkSupplieAd = idSupplie SET adressPrincipal = ?, adressDescription = ?, aComments=?, sDateUpdate=? WHERE idAdress= ?;",[
+		req.body.adressPrincipal,
+		req.body.adressDescription,
+		req.body.aComments,
+		req.body.sDateUpdate,
+		req.body.idAdress
+		
+	])
+	if(rows.affectedRows>0)
+	{res.send("La actualizacion fue realizada correctamente")}
+	else{res.send("No se realizo la actualizacion")}
+	db.end()
+}
+
 //12.-Editar Contacto
+export const EditContact = async (req, res)=>
+{
+	const db = await connect()
+	const [rows] = await db.query("UPDATE contactsupplies INNER JOIN adresssupplie INNER JOIN supplie ON FkAdressCont = idAdress AND FkSupplieAd = idSupplie SET contactPrincipal =?, workposition =?, officeNumber=?, cellphoneNumber=?, comments=?, sDateUpdate=? WHERE idContact=?;",[
+		req.body.contactPrincipal, 
+		req.body.workposition, 
+		req.body.officeNumber, 
+		req.body.cellphoneNumber, 
+		req.body.comments, 
+		req.body.sDateUpdate, 
+		req.body.idContact
+	])
+	if(rows.affectedRows>0)
+	{res.send("La actualizacion fue realizada correctamente")}
+	else{res.send("No se realizo la actualizacion")}
+	db.end()
+}
+
+
 //13.-Editar Proveedor
+
+export const EditSupplie = async (req, res)=>
+{
+	const db = await connect()
+	const [rows] = await db.query("UPDATE supplie SET nameSupplie =?, FKBusinessType =?, FkClasification=?,sDateUpdate =?WHERE idSupplie =?;",[
+		req.body.nameSupplie,
+		req.body.FKBusinessType, 
+		req.body.FkClasification,
+		req.body.sDateUpdate,
+		req.body.idSupplie
+	])
+	if(rows.affectedRows>0)
+	{res.send("La actualizacion fue realizada correctamente")}
+	else{res.send("No se realizo la actualizacion")}
+	db.end()
+}
+
 //14.-Editar Relacion Proveedor Producto
+
+export const EditSupply = async (req, res)=>
+{
+	const db = await connect()
+	const [rows] = await db.query("UPDATE supply SET price = ?,deliveryTime =?,productLine =?, comments =?,pDateUpdate =?,pSampleF=?,pSampleLocation=? WHERE idSupply=?;",[
+	req.body.price,
+	req.body.deliveryTime,
+	req.body.productLine, 
+	req.body.comments,
+	req.body.pDateUpdate,
+	req.body.pSampleF,
+	req.body.pSampleLocation,
+	req.body.idSupply
+
+	])
+	if(rows.affectedRows>0)
+	{res.send("La actualizacion fue realizada correctamente")}
+	else{res.send("No se realizo la actualizacion")}
+	db.end()
+}
 
 /*15.-Eliminar Contacto, si es contacto principal lanzar advertencia y asignar un nuevo contacto principal antes de borrar el anterior
 Si no existe ningún otro contacto lanzar advertencia que se eliminara el domicilio, si no existe ningún otro domicilio lanzar advertencia
@@ -205,10 +302,21 @@ que se eliminara el contacto y todos los productos que tenga asignados, dar opci
 el único domicilio agregar nuevo domicilio.
 */
 
+export const deleteContact = async(req, res)=>
+{
+	const db = await connect()
+	const [principal]= await db.query("",[
+
+	]) 
+
+}
+
 /*16.-Eliminar Domicilio, si es el domicilio principal lanzar advertencia y asignar nuevo domicilio principal antes de borrar el anterior
 si no existe ninguno otro domicilio lanzar advertencia que se eliminara el proveedor y todos los productos asignados a el, 
 dar opción de agregar domicilio.
 */
+
+
 /*17.-Eliminar Producto, elimina la relación del proveedor con el producto si no hay más productos del proveedor se lanza advertencia que un 
 proveedor siempre debe tener un producto asignado de lo contrario se eliminara el proveedor, dar opción de agregar o asignar nuevo producto
 */
@@ -222,6 +330,9 @@ proveedor siempre debe tener un producto asignado de lo contrario se eliminara e
 Metodos de Productos
 
 1.- Agregar Producto 
+2.- Asignar Producto
+3.- Editar Producto
+4.- Eliminar Producto
 
 */
 
