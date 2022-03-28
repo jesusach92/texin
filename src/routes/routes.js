@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { supplielist, supplieById, 
     supplieFullAdress, adressContact, supplieContacts, 
-    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply } 
+    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType } 
 from '../controllers/controllers'
 
 const router = Router();
@@ -55,8 +55,44 @@ router.put('/Actualizar/Proveedor',EditSupplie)
 
 router.put('/Actualizar/Relacion',EditSupply)
 
+//Metodos de borrado
+
+//Borrar contacto de domicilio
+router.delete('/Borrar/contacto/:id', deleteContact)
+
+// Borrar Domicilios
+router.delete('/Borrar/Domicilio/:id',deleteAdress)
+
+// Borrar Relacion Proveedor-Producto
+
+router.delete('/Borrar/Relacion/:id', deleteSupply)
+
+// Borrar Proveedor
+router.delete('/Borrar/proveedor/:id',deleteSupplie)
+
 // Metodos de Productos
 
+//Agregar producto sin relacion
 router.post('/agregar/producto',addProduct)
+
+// Actualizar campos del producto
+router.put('/Actualizar/Producto',editProduct)
+
+// Borrar producto y su relacion con los proveedores
+router.delete('/Borrar/Producto/:id',deleteProduct)
+
+// Metodos de Configuracion 
+
+//Metodo par agregar tipo de negocio
+router.post('/Agregar/negocio',addBusinessType)
+
+//Metodo para agregar Tecnologia del producto
+router.post('/Agregar/Tecnologia',addTechnology)
+
+// Metodo para agregar clasificacion de proveedor
+router.post('/Agregar/Clasificacion',addsClasification)
+
+//Agregar tipo de domicilio
+router.post('/Agregar/TipoDomicilio',addaType)
 
 export default router;

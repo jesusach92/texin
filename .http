@@ -3,27 +3,27 @@
 ### Lista Todos los proveedores con su tipo de negocio y su clasificacion
 GET {{api}}/proveedores HTTP/1.1
 
-###
+### Lista Un proveedor con su tipo de negocio y clasificacion
 GET {{api}}/proveedor/1 HTTP/1.1
 
-###
-GET {{api}}/proveedor/domicilios/3 HTTP/1.1
+### Lista todos los domicilios del proveedor
+GET {{api}}/proveedor/domicilios/4 HTTP/1.1
 
-###
-GET {{api}}/proveedor/domicilio/contactos/3 HTTP/1.1
+### Lista todos los contactos de un domicilio
+GET {{api}}/proveedor/domicilio/contactos/5 HTTP/1.1
 
-###
-GET {{api}}/proveedor/contactos/3 HTTP/1.1
+### Lista todos los contactos de un proveedor
+GET {{api}}/proveedor/contactos/4 HTTP/1.1
 
-###
-GET {{api}}/proveedor/productos/5 HTTP/1.1
+### lista todos los productos que tiene un proveedor asigandos
+GET {{api}}/proveedor/productos/4 HTTP/1.1
 
-###
+### Agregar proveedor
 POST {{api}}/agregar/proveedor HTTP/1.1
 content-type: application/json
 
 {
-        "nameSupplie": "Botones Pancho",
+        "nameSupplie": "Telas Jose",
         "FkBusinessType": 2, 
         "FkClasification": 1, 
         "sDateInitial": "2022-03-22", 
@@ -31,12 +31,12 @@ content-type: application/json
 
 }
 
-###
+### Agregar domicilio
 POST {{api}}/agregar/domicilio HTTP/1.1
 Content-Type: application/json
 
 {
-        "FkSupplieAd": 3,
+        "FkSupplieAd": 4,
         "FkadressType": 2,
         "adressCountry":"Mexico",
         "adressState":"CDMX",
@@ -44,12 +44,12 @@ Content-Type: application/json
         "aComments":"Domicilio Principal para contactar a proveedor"
 }
 
-###
+### Agregar contacto a domicilio de proveedor
 POST {{api}}/agregar/contacto HTTP/1.1
 Content-Type: application/json
 
 {
-        "FkAdressCont": 3, 
+        "FkAdressCont": 6, 
         "nameContact": "Benjamín Garcia Vazquez", 
         "workposition":"Gerente", 
         "officeNumber": "4137206820", 
@@ -59,22 +59,24 @@ Content-Type: application/json
 
 
 ### Metodos de Productos
+
+### Agregar producto
 POST {{api}}/agregar/producto HTTP/1.1
 Content-Type: application/json
 
 {
         "FkTechnologyPro": 1, 
-        "productName": "Tela retardante al fuego", 
+        "productName": "Tela de punto", 
         "descriptionProduct":"Tela ignifuga hasta por 40 segundos"
 }
 
-###
+### Asignar producto
 POST {{api}}/Asignar/Producto HTTP/1.1
 Content-Type: application/json
 
 {
-"FkSupplieSpy":1, 
-"FkProductSpy":2, 
+"FkSupplieSpy":2, 
+"FkProductSpy":3, 
 "price": 587.92, 
 "deliveryTime":"2 Días", 
 "productLine":"en Stock", 
@@ -137,4 +139,68 @@ Content-Type: application/json
 "pSampleF":0,
 "pSampleLocation":"No contamos con muestra fisica",
 "idSupply":2
+}
+
+### Metodos de eliminacion Proveedores
+
+###Borrar un contacto
+DELETE {{api}}/Borrar/contacto/5 HTTP/1.1
+
+### Borrar un domicilio con todos sus contactos
+DELETE {{api}}/Borrar/Domicilio/9
+
+### Borrar relacion proveedor-Producto
+DELETE {{api}}/Borrar/Relacion/3
+
+### Borrar Proveedor con todas sus relaciones
+DELETE {{api}}/Borrar/Proveedor/4
+
+### Metodos de Productos
+
+PUT {{api}}/Actualizar/Producto HTTP/1.1
+Content-Type: application/json
+
+{
+"FkTechnologyPro":1, 
+"productName":"Tela de punto con tramado", 
+"descriptionProduct":"Tela de punto para camisas con tramado",
+"idProduct": 3 
+}
+
+### Eliminar Producto con su relacion
+DELETE {{api}}/Borrar/Producto/3 HTTP/1.1
+
+### Metodos de Configuracion
+
+###Agregar tipo de Negocio
+POST {{api}}/Agregar/negocio HTTP/1.1
+Content-Type: application/json
+
+{
+"bName":"Cierres",
+"bDescription":"Proveedores de Cierres"
+}
+
+### Agregar Tecnologia
+POST {{api}}/Agregar/Tecnologia HTTP/1.1
+Content-Type: application/json
+
+{
+ "nameTechnology":"Anti-Corte"
+}
+
+###Agregar Clasificacion de proveedor
+POST {{api}}/Agregar/Clasificacion  HTTP/1.1
+Content-Type: application/json
+
+{
+"clasificationName":"Distribuidor Extranjero"
+}
+
+### Agregar tipo de domicilio
+POST {{api}}/Agregar/TipoDomicilio HTTP/1.1
+Content-Type: application/json
+
+{
+"aType":"Sucursal"
 }

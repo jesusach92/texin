@@ -1,39 +1,7 @@
 import { connect } from '../database/database';
 
 
-/* Metodos de los Proveedores
-1.-Listar proveedores con tipo de negocio y tipo de proveedor
-
-2.-Obtener Proveedor por Id
-3.-Obtener los domicilios del proveedor
-4.-Obtener los contactos del domicilio 
-5.-Obtener todos los contactos del proveedor
-6.-Obtener todos los productos que el proveedor tiene registrados
-
-7.-Agregar Proveedor
-8.-Agregar Domicilio a proveedor
-9.-Agregar Contacto a Domicilio de Proveedor
-10.-Asignar Producto a Proveedor: siempre y cuando el producto ya exista
-
-11.-Editar Domicilio
-12.-Editar Contacto
-13.-Editar Proveedor
-14.-Editar Relacion Proveedor Producto
-
-15.-Eliminar Contacto, si es contacto principal lanzar advertencia y asignar un nuevo contacto principal antes de borrar el anterior
-Si no existe ningún otro contacto lanzar advertencia que se eliminara el domicilio, si no existe ningún otro domicilio lanzar advertencia
-que se eliminara el contacto y todos los productos que tenga asignados, dar opción de agregar nuevo contacto al domicilio y opción si es 
-el único domicilio agregar nuevo domicilio.
-
-16.-Eliminar Domicilio, si es el domicilio principal lanzar advertencia y asignar nuevo domicilio principal antes de borrar el anterior
-si no existe ninguno otro domicilio lanzar advertencia que se eliminara el proveedor y todos los productos asignados a el, 
-dar opción de agregar domicilio.
-
-17.-Eliminar Producto, elimina la relación del proveedor con el producto si no hay más productos del proveedor se lanza advertencia que un 
-proveedor siempre debe tener un producto asignado de lo contrario se eliminara el proveedor, dar opción de agregar o asignar nuevo producto
-
-18.-Eliminar Proveedor, eliminar por completo todos los datos relacionados con el proveedor, domicilios, contactos, productos que tenga asignados.
-*/
+/* Metodos de los Proveedores*/
 
 // 1.- Listar proveedores con el tipo de negocio y el tipo de proveedor que son
 export const supplielist = async (req, res) => {
@@ -296,46 +264,66 @@ export const EditSupply = async (req, res)=>
 	db.end()
 }
 
-/*15.-Eliminar Contacto, si es contacto principal lanzar advertencia y asignar un nuevo contacto principal antes de borrar el anterior
-Si no existe ningún otro contacto lanzar advertencia que se eliminara el domicilio, si no existe ningún otro domicilio lanzar advertencia
-que se eliminara el contacto y todos los productos que tenga asignados, dar opción de agregar nuevo contacto al domicilio y opción si es 
-el único domicilio agregar nuevo domicilio.
-*/
+    /*15.-Eliminar Contacto de acuerdo a su Id contact*/
 
 export const deleteContact = async(req, res)=>
 {
 	const db = await connect()
-	const [principal]= await db.query("",[
-
+	const [rows]= await db.query("DELETE FROM contactsupplies WHERE idContact=?;",[
+        req.params.id
 	]) 
-
+    if(rows.affectedRows>0)
+    {res.send("Contacto eliminado con exito")}
+    else{res.send("No se puede eliminar el contacto")}
+    db.end()
 }
 
-/*16.-Eliminar Domicilio, si es el domicilio principal lanzar advertencia y asignar nuevo domicilio principal antes de borrar el anterior
-si no existe ninguno otro domicilio lanzar advertencia que se eliminara el proveedor y todos los productos asignados a el, 
-dar opción de agregar domicilio.
+/*16.-Eliminar Domicilio de acuerdo con su Id de domicilio
 */
+export const deleteAdress = async(req, res)=>
+{
+	const db = await connect()
+	const [rows]= await db.query("DELETE FROM adresssupplie WHERE idAdress=?;",[
+        req.params.id
+	]) 
+    if(rows.affectedRows>0)
+    {res.send("Domicilio eliminado con exito")}
+    else{res.send("No se puede eliminar el contacto")}
+    db.end()
+}
 
 
-/*17.-Eliminar Producto, elimina la relación del proveedor con el producto si no hay más productos del proveedor se lanza advertencia que un 
-proveedor siempre debe tener un producto asignado de lo contrario se eliminara el proveedor, dar opción de agregar o asignar nuevo producto
+
+/*17.-Eliminar Producto asignado al proveedor
 */
+export const deleteSupply = async(req, res)=>
+{
+	const db = await connect()
+	const [rows]= await db.query("DELETE FROM supply WHERE idSupply=?;",[
+        req.params.id
+	]) 
+    if(rows.affectedRows>0)
+    {res.send("Producto eliminado con exito del proveedor")}
+    else{res.send("No se pudo eliminar el producto del proveedor")}
+    db.end()
+}
 
 //18.-Eliminar Proveedor, eliminar por completo todos los datos relacionados con el proveedor, domicilios, contactos, productos que tenga asignados.
+export const deleteSupplie = async(req, res)=>
+{
+	const db = await connect()
+	const [rows]= await db.query("DELETE FROM supplie WHERE idSupplie=?;",[
+        req.params.id
+	]) 
+    if(rows.affectedRows>0)
+    {res.send("Proveedor Eliminado con Exito")}
+    else{res.send("No se pudo eliminar el proveedor")}
+    db.end()
+}
 
+//Metodos de Productos
 
-
-
-/*
-Metodos de Productos
-
-1.- Agregar Producto 
-2.- Asignar Producto
-3.- Editar Producto
-4.- Eliminar Producto
-
-*/
-
+// 1.-Agregar Producto
 export const addProduct = async (req, res)=>
 {
     const db = await connect()
@@ -349,12 +337,89 @@ export const addProduct = async (req, res)=>
     db.end()
 } 
 
+//2.-Editar Producto
+export const editProduct = async (req, res)=>{
+    const db = await connect()
+    const [rows]= await db.query("UPDATE products SET FkTechnologyPro = ?, productName=?, descriptionProduct=? WHERE idProduct=?;",[
+        req.body.FkTechnologyPro, 
+        req.body.productName, 
+        req.body.descriptionProduct, 
+        req.body.idProduct  
+    ])
+    if(rows.affectedRows>0)
+	{res.send("La actualizacion fue realizada correctamente")}
+	else{res.send("No se realizo la actualizacion")}
+	db.end()
+}
 
-/*
-Metodos Generales de configuracion
+//3.- Eliminar Producto
+export const deleteProduct = async (req, res) =>
+{
+    const db = await connect()
+	const [rows]= await db.query("DELETE FROM products WHERE idProduct=?;",[
+        req.params.id
+	]) 
+    if(rows.affectedRows>0)
+    {res.send("Producto Eliminado con Exito")}
+    else{res.send("No se pudo eliminar el producto")}
+    db.end()
+}
+/*Metodos Generales de configuracion*/
+// Agregar Tipo de Negocio para clasificar
+export const addBusinessType = async (req, res) =>
+{
+    const db = await connect()
+    try{
+	const [rows]= await db.query("INSERT INTO businesstype (bName, bDescription) VALUES (?,?);",[
+        req.body.bName,
+        req.body.bDescription
+	])
+    res.json(rows.insertId)}
+    catch (e)
+    {console.log(e)}
+    db.end()
+}
+// Metodo para agregar Clasificacion de Productos
+export const addTechnology = async (req, res) =>
+{
+    const db = await connect()
+    try{
+	const [rows]= await db.query("INSERT INTO technologies (nameTechnology) VALUES (?);",[
+        req.body.nameTechnology
+	])
+    res.json(rows.insertId)}
+    catch (e)
+    {console.log(e)}
+    db.end()
+}
+// Metodo para agregar Clasificacion de Proveedores
 
-*/
+export const addsClasification = async (req, res) =>
+{
+    const db = await connect()
+    try{
+	const [rows]= await db.query("INSERT INTO sclasification (clasificationName) VALUES (?);",[
+        req.body.clasificationName
+	])
+    res.json(rows.insertId)}
+    catch (e)
+    {console.log(e)}
+    db.end()
+}
 
+//Metodo para agregar Tipos de Domicilio
+export const addaType= async (req, res) =>
+{
+    const db = await connect()
+    try{
+	const [rows]= await db.query("INSERT INTO adresstype (aType) VALUES (?);",[
+        req.body.aType
+	])
+    res.json(rows.insertId)}
+    catch (e)
+    {console.log(e)}
+    db.end()
+}
 
 
 // Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),   
