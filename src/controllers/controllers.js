@@ -6,7 +6,7 @@ import { connect } from '../database/database';
 // 1.- Listar proveedores con el tipo de negocio y el tipo de proveedor que son
 export const supplielist = async (req, res) => {
     const db= await connect();
-    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification;");
+    const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification ORDER BY sDateUpdate DESC;");
     if(!rows)
     {res.send("No hay proveedores Registrados")}
     else{res.json(rows)}

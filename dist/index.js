@@ -4,6 +4,8 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 
 var _app = _interopRequireDefault(require("./app"));
 
-_app["default"].listen(3001);
+var PORT = 3001;
 
-console.log("server online on port 3001");
+_app["default"].listen(PORT);
+
+console.log("server online on port: " + PORT);

@@ -7,16 +7,16 @@ GET {{api}}/proveedores HTTP/1.1
 GET {{api}}/proveedor/1 HTTP/1.1
 
 ### Lista todos los domicilios del proveedor
-GET {{api}}/proveedor/domicilios/4 HTTP/1.1
+GET {{api}}/proveedor/domicilios/1 HTTP/1.1
 
 ### Lista todos los contactos de un domicilio
-GET {{api}}/proveedor/domicilio/contactos/5 HTTP/1.1
+GET {{api}}/proveedor/domicilio/contactos/1 HTTP/1.1
 
 ### Lista todos los contactos de un proveedor
-GET {{api}}/proveedor/contactos/4 HTTP/1.1
+GET {{api}}/proveedor/contactos/1 HTTP/1.1
 
 ### lista todos los productos que tiene un proveedor asigandos
-GET {{api}}/proveedor/productos/4 HTTP/1.1
+GET {{api}}/proveedor/productos/1 HTTP/1.1
 
 ### Agregar proveedor
 POST {{api}}/agregar/proveedor HTTP/1.1
