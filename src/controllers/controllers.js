@@ -8,7 +8,7 @@ export const supplielist = async (req, res) => {
     const db= await connect();
     const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification ORDER BY sDateUpdate DESC;");
     if(!rows)
-    {res.send("No hay proveedores Registrados")}
+    {res.json([])}
     else{res.json(rows)}
     db.end()
 }
@@ -20,7 +20,7 @@ export const supplieById = async (req, res) =>{
     const [rows] = await db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType = t2.idBusinessType AND t1.FkClasification = t3.idClasification WHERE t1.idSupplie= ?;",[
         req.params.id
     ])
-    if(!rows.length)res.send("No existe el proveedor con ese ID")
+    if(!rows.length)res.json([])
     else res.json(rows)
     db.end()
 }
@@ -31,11 +31,11 @@ export const supplieById = async (req, res) =>{
 export const supplieFullAdress = async (req, res)=>
 {
     const db=await connect()
-    const [rows]= await db.query("SELECT * FROM adresssupplie t1 JOIN adresstype t2 ON t1.FkadressType = t2.idadressType WHERE t1.FkSupplieAd =?;",[
+    const [rows]= await db.query("SELECT * FROM adresssupplie t1 JOIN adresstype t2 ON t1.FkadressType = t2.idadressType WHERE t1.FkSupplieAd =? ORDER BY adressPrincipal DESC;",[
         req.params.id
     ])
     if(!rows.length)
-    {res.send("El proveedor no cuenta con domicilios registrados registrar uno")}
+    {res.json([])}
     else{res.json(rows)}
     db.end()
 }
@@ -45,11 +45,11 @@ export const supplieFullAdress = async (req, res)=>
 export const adressContact = async (req, res)=>
 {
     const db=await connect()
-    const [rows] = await db.query("SELECT * FROM adresssupplie t1 JOIN adresstype t2 JOIN contactsupplies t3 ON t1.FkadressType = t2.idadressType AND t1.idAdress = t3.FkAdressCont WHERE t1.idAdress = ? ORDER BY t3.contactPrincipal DESC;",[
+    const [rows] = await db.query("SELECT * FROM contactsupplies WHERE FkAdressCont =? ORDER BY contactPrincipal DESC;",[
         req.params.id
     ])
     if(!rows.length)
-    {res.send("El Domicilio no cuenta con contactos registrados registrar uno")}
+    {res.json([])}
     else{res.json(rows)}
     db.end()
 }
@@ -63,7 +63,7 @@ export const supplieContacts = async (req, res)=>
         req.params.id
     ])
     if(!rows.length)
-    {res.send("El Proveedor no cuenta con contactos registrados registrar uno")}
+    {res.json([])}
     else{res.json(rows)}
     db.end()
 }
@@ -77,7 +77,7 @@ export const supplieProducts = async (req, res) =>
         req.params.id
     ])
 	 if(!rows.length)
-	 {res.send("El proveedor no tiene productos Asignados")}
+	 {res.json([])}
 	 else{res.json(rows)}
     db.end()
 }
@@ -126,7 +126,7 @@ export const addAdress = async (req, res) =>
         req.body.aComments
 
     ])
-    res.json(rows.insertId)
+    res.json({value:1})
     db.end()
 }
 
@@ -421,5 +421,11 @@ export const addaType= async (req, res) =>
     db.end()
 }
 
-
+export const listAType = async(req,res)=>
+{
+    const db=await connect()
+    const [rows]=await db.query("SELECT * FROM adresstype;")
+    res.json(rows)
+    db.end()
+}
 // Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),   

@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { supplielist, supplieById, 
     supplieFullAdress, adressContact, supplieContacts, 
-    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType } 
+    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType, listAType } 
 from '../controllers/controllers'
 
 const router = Router();
 
-// Lista a todos los proveedores con domilicio y contacto principal
+// Lista a todos los proveedores con tipo de negocio y clasificacion
 router.get('/proveedores', supplielist);
 
 //obtiene los datos del proveedor que corresponde al ID
@@ -15,7 +15,7 @@ router.get('/proveedor/:id', supplieById)
 //Obtiene todos los domicilios del proveedor
 router.get('/proveedor/domicilios/:id', supplieFullAdress)
 
-// Obtiene tiene los contactos del domicilio
+// Obtiene todos los contactos del domicilio pasando el Id del domicilio
 router.get('/proveedor/domicilio/contactos/:id', adressContact)
 
 // Obtiene todos los contactos del proveedor
@@ -94,5 +94,7 @@ router.post('/Agregar/Clasificacion',addsClasification)
 
 //Agregar tipo de domicilio
 router.post('/Agregar/TipoDomicilio',addaType)
+
+router.get('/TiposDom',listAType)
 
 export default router;

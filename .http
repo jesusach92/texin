@@ -1,4 +1,5 @@
 @api = http://localhost:3001
+@Pais = https://www.universal-tutorial.com/api/states/             
 
 ### Lista Todos los proveedores con su tipo de negocio y su clasificacion
 GET {{api}}/proveedores HTTP/1.1
@@ -204,3 +205,9 @@ Content-Type: application/json
 {
 "aType":"Sucursal"
 }
+
+###Listar Tipos de Domicilio
+GET {{api}}/TiposDom HTTP/1.1
+
+
+GET url HTTP/1.1
