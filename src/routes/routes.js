@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { supplielist, supplieById, 
     supplieFullAdress, adressContact, supplieContacts, 
-    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType, listAType } 
+    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType, listAType, productlist, productId, productSupplies, listTech,} 
 from '../controllers/controllers'
 
 const router = Router();
@@ -72,6 +72,14 @@ router.delete('/Borrar/proveedor/:id',deleteSupplie)
 
 // Metodos de Productos
 
+// Listar productos con Nombre del producto, tecnologia, descripcion
+router.get('/productos', productlist)
+
+// Mostrar datos de producto por Id
+router.get('/Producto/:id',productId)
+
+router.get('/Producto/Proveedores/:id',productSupplies)
+
 //Agregar producto sin relacion
 router.post('/agregar/producto',addProduct)
 
@@ -83,11 +91,14 @@ router.delete('/Borrar/Producto/:id',deleteProduct)
 
 // Metodos de Configuracion 
 
-//Metodo par agregar tipo de negocio
+//Metodo para agregar tipo de negocio
 router.post('/Agregar/negocio',addBusinessType)
 
 //Metodo para agregar Tecnologia del producto
 router.post('/Agregar/Tecnologia',addTechnology)
+
+//Metodo para que regresa los tipos de tecnolocia que existen
+router.get('/Tecnologias', listTech)
 
 // Metodo para agregar clasificacion de proveedor
 router.post('/Agregar/Clasificacion',addsClasification)

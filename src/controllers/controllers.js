@@ -1,6 +1,14 @@
+import req from 'express/lib/request';
+import res, { cookie } from 'express/lib/response';
 import { connect } from '../database/database';
 
 
+// Fecha de ultima actualizacion
+const date = ()=>{
+let fulldate = new Date
+let date = `${fulldate.getFullYear()}-${fulldate.getMonth()+1}-${fulldate.getDate()}`
+return date
+} 
 /* Metodos de los Proveedores*/
 
 // 1.- Listar proveedores con el tipo de negocio y el tipo de proveedor que son
@@ -115,6 +123,10 @@ export const addAdress = async (req, res) =>
     if(!principal.length)
     {principalAdress=1}
     else{principalAdress=0}
+    await db.query("UPDATE supplie SET  supplie.sDateUpdate=? WHERE idSupplie=?;",[
+        date(),
+        req.body.FkSupplieAd
+    ])
     const [rows]= await db.query("INSERT INTO adresssupplie (FkSupplieAd, FkadressType, adressPrincipal, adressCountry, adressState, adressDescription, aComments) VALUES (?,?,?,?,?,?,?);",[
         
         req.body.FkSupplieAd,
@@ -149,6 +161,7 @@ export const addContact = async (req, res) =>
         req.body.officeNumber, 
         req.body.cellphoneNumber, 
         req.body.comments
+        
     ])  
     res.json(rows.insertId)
     db.end()
@@ -323,7 +336,42 @@ export const deleteSupplie = async(req, res)=>
 
 //Metodos de Productos
 
-// 1.-Agregar Producto
+// 1.- Listar productos con tecnologia, despripcion y nombre
+export const productlist = async(req, res)=>
+{
+    const db = await connect()
+    const [rows] = await db.query("SELECT idProduct,productName,descriptionProduct,nameTechnology FROM products INNER JOIN technologies ON FkTechnologyPro= idTechnology;")
+    if(!rows.length)
+    {res.json([])}
+    else{res.json(rows)}
+   db.end()
+}
+// 2.-Devolver producto por id
+export const productId = async (req, res) =>{
+    const db= await connect()
+    const [rows] = await db.query("SELECT idProduct,productName,descriptionProduct,nameTechnology FROM products INNER JOIN technologies ON FkTechnologyPro= idTechnology WHERE idProduct=?;",[
+        req.params.id
+    ])
+    if(!rows.length)
+    {res.json([])}
+    else{res.json(rows)}
+   db.end()
+}
+
+//3.- Devolver todos los proveedores que tienen en venta 1 producto
+export const productSupplies = async (req, res)=>{
+    const db= await connect()
+    const [rows] = await db.query("SELECT idSupply,price,deliveryTime,productLine,comments,pDateInitial,pDateUpdate,pSampleF,pSampleLocation,idSupplie,nameSupplie FROM supply  INNER JOIN supplie ON FkSupplieSpy = idSupplie WHERE FkProductSpy=? ORDER BY pDateUpdate;",[
+        req.params.id
+    ])
+    if(!rows.length)
+    {res.json([])}
+    else{res.json(rows)}
+   db.end()
+}
+
+
+// 2.-Agregar Producto
 export const addProduct = async (req, res)=>
 {
     const db = await connect()
@@ -420,7 +468,16 @@ export const addaType= async (req, res) =>
     {console.log(e)}
     db.end()
 }
+// Metodo para listar las tenologias del producto
+export const listTech = async(req, res)=>
+{
+    const db=await connect()
+    const [rows]=await db.query("SELECT * FROM technologies;")
+    res.json(rows)
+    db.end()
+}
 
+//Metodo para listar los tipos de domicilio
 export const listAType = async(req,res)=>
 {
     const db=await connect()
