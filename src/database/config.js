@@ -1,6 +1,6 @@
 export const config = {
     host: 'localhost',
     user: 'root',
-    password: 'Olinco19',
-    database: 'supplies'
+    password: '12345678',
+    database: 'supplies1.0'
 };

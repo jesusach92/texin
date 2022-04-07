@@ -1,34 +1,213 @@
 @api = http://localhost:3001
+@Pais = https://www.universal-tutorial.com/api/states/             
 
+### Lista Todos los proveedores con su tipo de negocio y su clasificacion
+GET {{api}}/proveedores HTTP/1.1
+
+### Lista Un proveedor con su tipo de negocio y clasificacion
+GET {{api}}/proveedor/1 HTTP/1.1
+
+### Lista todos los domicilios del proveedor
+GET {{api}}/proveedor/domicilios/1 HTTP/1.1
+
+### Lista todos los contactos de un domicilio
+GET {{api}}/proveedor/domicilio/contactos/1 HTTP/1.1
+
+### Lista todos los contactos de un proveedor
+GET {{api}}/proveedor/contactos/1 HTTP/1.1
+
+### lista todos los productos que tiene un proveedor asigandos
+GET {{api}}/proveedor/productos/1 HTTP/1.1
+
+### Agregar proveedor
 POST {{api}}/agregar/proveedor HTTP/1.1
 content-type: application/json
 
 {
-    "supplie_name": "Telas del Centro",
-    "idBusinessType_Sup": 1
+        "nameSupplie": "Telas Jose",
+        "FkBusinessType": 2, 
+        "FkClasification": 1, 
+        "sDateInitial": "2022-03-22", 
+        "sDateUpdate": "2022-03-24"
+
 }
 
-### 
-POST {{api}}/agregar/producto HTTP/1.1
-content-type: application/json
+### Agregar domicilio
+POST {{api}}/agregar/domicilio HTTP/1.1
+Content-Type: application/json
 
 {
-    "productName": "Boton de Camisa",
-    "description_product": "Boton para camisa metalico",
-    "idTechnology_Pro": 3
+        "FkSupplieAd": 4,
+        "FkadressType": 2,
+        "adressCountry":"Mexico",
+        "adressState":"CDMX",
+        "adressDescription":"Jesús María, Centro Histórico de la Cdad. de México, Centro, Cuauhtémoc, 06000 Ciudad de México, CDMX",
+        "aComments":"Domicilio Principal para contactar a proveedor"
+}
+
+### Agregar contacto a domicilio de proveedor
+POST {{api}}/agregar/contacto HTTP/1.1
+Content-Type: application/json
+
+{
+        "FkAdressCont": 6, 
+        "nameContact": "Benjamín Garcia Vazquez", 
+        "workposition":"Gerente", 
+        "officeNumber": "4137206820", 
+        "cellphoneNumber": "9426363610", 
+        "comments": "Encargado de Ventas, con el realizar los pedidos y pedir numero de almacen y orden de envio"
+}
+
+
+### Metodos de Productos
+
+### Agregar producto
+POST {{api}}/agregar/producto HTTP/1.1
+Content-Type: application/json
+
+{
+        "FkTechnologyPro": 1, 
+        "productName": "Tela de punto", 
+        "descriptionProduct":"Tela ignifuga hasta por 40 segundos"
+}
+
+### Asignar producto
+POST {{api}}/Asignar/Producto HTTP/1.1
+Content-Type: application/json
+
+{
+"FkSupplieSpy":2, 
+"FkProductSpy":3, 
+"price": 587.92, 
+"deliveryTime":"2 Días", 
+"productLine":"en Stock", 
+"comments":"El producto se encuentra en Stock", 
+"pDateInitial":"2022-03-24", 
+"pDateUpdate":"2022-03-25", 
+"pSampleF":1, 
+"pSampleLocation":"La muestra se encuentra en las carpetas del proveedor"
+}
+
+### Metodos de Actualizacion 
+
+PUT {{api}}/Actualizar/Domicilio HTTP/1.1
+Content-Type: application/json
+
+{
+"adressPrincipal":1,
+"adressDescription":"Isidro Fabela, 52004 Lerma de Villada, Méx",
+"aComments":"Actualizacion de Domicilio con mismos contactos",
+"sDateUpdate":"2022-03-25",
+"idAdress":"5"	
 }
 
 ###
-GET {{api}}/proveedores HTTP/1.1
+PUT {{api}}/Actualizar/Contacto HTTP/1.1
+Content-Type: application/json
+
+{
+"contactPrincipal": 0, 
+"workposition":"Almacen", 
+"officeNumber":"7751349318", 
+"cellphoneNumber":"7751349318", 
+"comments":"El vendedor ahora es encargado del Almacen", 
+"sDateUpdate":"2022-03-25",  
+"idContact":2
+}
 
 ###
-GET {{api}}/proveedores/15 HTTP/1.1
+PUT {{api}}/Actualizar/Proveedor HTTP/1.1
+Content-Type: application/json
+
+{
+"nameSupplie":"Botones Francisco",
+"FKBusinessType":2, 
+"FkClasification":1,
+"sDateUpdate":"2022-03-26",
+"idSupplie":3
+}
 
 ###
-GET {{api}}/proveedores/18/productos HTTP/1.1
+PUT {{api}}/Actualizar/Relacion HTTP/1.1
+Content-Type: application/json
 
-###
-GET {{api}}/productos HTTP/1.1
+{
+"price": 988.88,
+"deliveryTime":"2 Dias",
+"productLine":"Stock", 
+"comments":"El producto incremento calidad y bajo el minimo de compra",
+"pDateUpdate":"2022-03-24",
+"pSampleF":0,
+"pSampleLocation":"No contamos con muestra fisica",
+"idSupply":2
+}
 
-###
-GET {{api}}/productos/5/proveedores HTTP/1.1
+### Metodos de eliminacion Proveedores
+
+###Borrar un contacto
+DELETE {{api}}/Borrar/contacto/5 HTTP/1.1
+
+### Borrar un domicilio con todos sus contactos
+DELETE {{api}}/Borrar/Domicilio/9
+
+### Borrar relacion proveedor-Producto
+DELETE {{api}}/Borrar/Relacion/3
+
+### Borrar Proveedor con todas sus relaciones
+DELETE {{api}}/Borrar/Proveedor/4
+
+### Metodos de Productos
+
+PUT {{api}}/Actualizar/Producto HTTP/1.1
+Content-Type: application/json
+
+{
+"FkTechnologyPro":1, 
+"productName":"Tela de punto con tramado", 
+"descriptionProduct":"Tela de punto para camisas con tramado",
+"idProduct": 3 
+}
+
+### Eliminar Producto con su relacion
+DELETE {{api}}/Borrar/Producto/3 HTTP/1.1
+
+### Metodos de Configuracion
+
+###Agregar tipo de Negocio
+POST {{api}}/Agregar/negocio HTTP/1.1
+Content-Type: application/json
+
+{
+"bName":"Cierres",
+"bDescription":"Proveedores de Cierres"
+}
+
+### Agregar Tecnologia
+POST {{api}}/Agregar/Tecnologia HTTP/1.1
+Content-Type: application/json
+
+{
+ "nameTechnology":"De Punto"
+}
+
+###Agregar Clasificacion de proveedor
+POST {{api}}/Agregar/Clasificacion  HTTP/1.1
+Content-Type: application/json
+
+{
+"clasificationName":"Distribuidor Extranjero"
+}
+
+### Agregar tipo de domicilio
+POST {{api}}/Agregar/TipoDomicilio HTTP/1.1
+Content-Type: application/json
+
+{
+"aType":"Sucursal"
+}
+
+###Listar Tipos de Domicilio
+GET {{api}}/TiposDom HTTP/1.1
+
+
+GET url HTTP/1.1
