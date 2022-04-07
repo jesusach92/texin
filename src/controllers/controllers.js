@@ -100,13 +100,14 @@ export const addSupplie = async (req, res) =>
         req.body.nameSupplie,
         req.body.FkBusinessType, 
         req.body.FkClasification, 
-        req.body.sDateInitial, 
-        req.body.sDateUpdate
+        date(),
+        date()
     ])
-    res.json(rows.insertId)
+    res.json({insertId:rows.insertId,
+        value:1})
    }
 	catch (e){
-		res.json("El Nombre del Proveedor ya se encuentra registrado")
+		res.json({value:0})
 	}
 	 db.end()
 }
@@ -138,7 +139,8 @@ export const addAdress = async (req, res) =>
         req.body.aComments
 
     ])
-    res.json({value:1})
+    res.json({insertId:rows.insertId,
+        value:1})
     db.end()
 }
 
@@ -185,8 +187,8 @@ export const AsingProductSupplie = async (req, res) =>
 			req.body.deliveryTime, 
 			req.body.productLine, 
 			req.body.comments, 
-			req.body.pDateInitial, 
-			req.body.pDateUpdate, 
+			date(),
+            date(), 
 			req.body.pSampleF, 
 			req.body.pSampleLocation
 			
@@ -207,7 +209,7 @@ export const EditAdress = async (req, res)=>
 		req.body.adressPrincipal,
 		req.body.adressDescription,
 		req.body.aComments,
-		req.body.sDateUpdate,
+		date(),
 		req.body.idAdress
 		
 	])
@@ -227,7 +229,7 @@ export const EditContact = async (req, res)=>
 		req.body.officeNumber, 
 		req.body.cellphoneNumber, 
 		req.body.comments, 
-		req.body.sDateUpdate, 
+		date(), 
 		req.body.idContact
 	])
 	if(rows.affectedRows>0)
@@ -246,7 +248,7 @@ export const EditSupplie = async (req, res)=>
 		req.body.nameSupplie,
 		req.body.FKBusinessType, 
 		req.body.FkClasification,
-		req.body.sDateUpdate,
+		date(),
 		req.body.idSupplie
 	])
 	if(rows.affectedRows>0)
@@ -265,7 +267,7 @@ export const EditSupply = async (req, res)=>
 	req.body.deliveryTime,
 	req.body.productLine, 
 	req.body.comments,
-	req.body.pDateUpdate,
+	date(),
 	req.body.pSampleF,
 	req.body.pSampleLocation,
 	req.body.idSupply
