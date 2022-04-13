@@ -165,7 +165,8 @@ export const addContact = async (req, res) =>
         req.body.comments
         
     ])  
-    res.json(rows.insertId)
+    res.json({insertId:rows.insertId,
+        value:1})
     db.end()
 }
 
