@@ -348,8 +348,8 @@ export const EditSupply = async (req, res)=>
 	req.body.idSupply
 	])
 	if(rows.affectedRows>0)
-	{res.send("La actualizacion fue realizada correctamente")}
-	else{res.send("No se realizo la actualizacion")}
+	{res.json({value:1})}
+	else{res.json({value:0})}
 	db.end()
     }
     catch (e){
@@ -532,6 +532,22 @@ export const deleteProduct = async (req, res) =>
     db.end()
     }
     catch (e){
+        console.log(e)
+    }
+}
+
+// Metodo que devuelve la relacion de un proveedor con un producto, pidiendo el Id de la relacion
+export const GetSupply = async (req, res) =>{
+    try
+    {
+        const db= await connect()
+        const [rows] = await db.query("SELECT * FROM supply WHERE idSupply=?;",[
+            req.params.id
+        ])
+        rows.length > 0 ? res.json(rows) : res.json({value:0})
+        db.end()
+    }
+    catch(e){
         console.log(e)
     }
 }

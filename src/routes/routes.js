@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { supplielist, supplieById, 
     supplieFullAdress, adressContact, supplieContacts, 
-    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType, listAType, productlist, productId, productSupplies, listTech, listBusiness, listSClasificacion,} 
+    supplieProducts, addSupplie, addAdress, addContact, addProduct, AsingProductSupplie, EditAdress, EditContact, EditSupplie, EditSupply, deleteContact, deleteAdress, deleteSupply, deleteSupplie, editProduct, deleteProduct, addBusinessType, addTechnology, addsClasification, addaType, listAType, productlist, productId, productSupplies, listTech, listBusiness, listSClasificacion, GetSupply,} 
 from '../controllers/controllers'
 
 const router = Router();
@@ -24,6 +24,9 @@ router.get('/proveedor/contactos/:id',supplieContacts)
 // Obtiene todos los productos del Proveedor
 router.get('/proveedor/productos/:id', supplieProducts)
 
+//Obtiene la relacion entre proveedor y producto
+router.get('/Proveedor/Producto/:id', GetSupply)
+
 // Metodos de Entrada de Proveedores//
 
 // Agrega Proveedor devuelve el ID del proveedor nuevo
@@ -36,7 +39,6 @@ router.post('/Agregar/domicilio',addAdress)
 router.post('/Agregar/contacto',addContact)
 
 //Asigna un producto que ya existe a un proveedor 
-
 router.post('/Asignar/Producto', AsingProductSupplie)
 
 
