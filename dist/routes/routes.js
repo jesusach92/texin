@@ -9,26 +9,28 @@ var _express = require("express");
 
 var _controllers = require("../controllers/controllers");
 
-var router = (0, _express.Router)(); // Lista a todos los proveedores con domilicio y contacto principal
+var router = (0, _express.Router)(); // Lista a todos los proveedores con tipo de negocio y clasificacion
 
 router.get('/proveedores', _controllers.supplielist); //obtiene los datos del proveedor que corresponde al ID
 
 router.get('/proveedor/:id', _controllers.supplieById); //Obtiene todos los domicilios del proveedor
 
-router.get('/proveedor/domicilios/:id', _controllers.supplieFullAdress); // Obtiene tiene los contactos del domicilio
+router.get('/proveedor/domicilios/:id', _controllers.supplieFullAdress); // Obtiene todos los contactos del domicilio pasando el Id del domicilio
 
 router.get('/proveedor/domicilio/contactos/:id', _controllers.adressContact); // Obtiene todos los contactos del proveedor
 
 router.get('/proveedor/contactos/:id', _controllers.supplieContacts); // Obtiene todos los productos del Proveedor
 
-router.get('/proveedor/productos/:id', _controllers.supplieProducts); // Metodos de Entrada de Proveedores//
+router.get('/proveedor/productos/:id', _controllers.supplieProducts); //Obtiene la relacion entre proveedor y producto
+
+router.get('/Proveedor/Producto/:id', _controllers.GetSupply); // Metodos de Entrada de Proveedores//
 // Agrega Proveedor devuelve el ID del proveedor nuevo
 
-router.post('/agregar/proveedor', _controllers.addSupplie); //Agrega domicilio a Proveedore devuelve el ID del nuevo domicilio
+router.post('/Agregar/proveedor', _controllers.addSupplie); //Agrega domicilio a Proveedore devuelve el ID del nuevo domicilio
 
-router.post('/agregar/domicilio', _controllers.addAdress); //Agrega contacto a Domicilio Devulve el Id del contacto
+router.post('/Agregar/domicilio', _controllers.addAdress); //Agrega contacto a Domicilio Devulve el Id del contacto
 
-router.post('/agregar/contacto', _controllers.addContact); //Asigna un producto que ya existe a un proveedor 
+router.post('/Agregar/contacto', _controllers.addContact); //Asigna un producto que ya existe a un proveedor 
 
 router.post('/Asignar/Producto', _controllers.AsingProductSupplie); // Metodos de Actualizacion de Proveedores
 //Actualiza el Domicilio y la fecha de Actualizacion del proveedor
@@ -49,21 +51,34 @@ router["delete"]('/Borrar/Domicilio/:id', _controllers.deleteAdress); // Borrar 
 router["delete"]('/Borrar/Relacion/:id', _controllers.deleteSupply); // Borrar Proveedor
 
 router["delete"]('/Borrar/proveedor/:id', _controllers.deleteSupplie); // Metodos de Productos
-//Agregar producto sin relacion
+// Listar productos con Nombre del producto, tecnologia, descripcion
+
+router.get('/productos', _controllers.productlist); // Mostrar datos de producto por Id
+
+router.get('/Producto/:id', _controllers.productId);
+router.get('/Producto/Proveedores/:id', _controllers.productSupplies); //Agregar producto sin relacion
 
 router.post('/agregar/producto', _controllers.addProduct); // Actualizar campos del producto
 
 router.put('/Actualizar/Producto', _controllers.editProduct); // Borrar producto y su relacion con los proveedores
 
 router["delete"]('/Borrar/Producto/:id', _controllers.deleteProduct); // Metodos de Configuracion 
-//Metodo par agregar tipo de negocio
+//Metodo para agregar tipo de negocio
 
-router.post('/Agregar/negocio', _controllers.addBusinessType); //Metodo para agregar Tecnologia del producto
+router.post('/Agregar/Negocio', _controllers.addBusinessType); //Metodo para agregar Tecnologia del producto
 
-router.post('/Agregar/Tecnologia', _controllers.addTechnology); // Metodo para agregar clasificacion de proveedor
+router.post('/Agregar/Tecnologia', _controllers.addTechnology); //Metodo para que regresa los tipos de tecnolocia que existen
+
+router.get('/Tecnologias', _controllers.listTech); // Metodo para agregar clasificacion de proveedor
 
 router.post('/Agregar/Clasificacion', _controllers.addsClasification); //Agregar tipo de domicilio
 
-router.post('/Agregar/TipoDomicilio', _controllers.addaType);
+router.post('/Agregar/TipoDomicilio', _controllers.addaType); //Metodo que devuelve los tipos de domicilio
+
+router.get('/TiposDom', _controllers.listAType); //Metodo que devuelve los tipos de negocios
+
+router.get('/Negocios', _controllers.listBusiness); // Metodo que devuelve las clasificaciones de un proveedor
+
+router.get('/Clasificacion', _controllers.listSClasificacion);
 var _default = router;
 exports["default"] = _default;

@@ -303,13 +303,13 @@ export const EditContact = async (req, res) => {
         req.body.cellphoneNumber,
         req.body.comments,
         date(),
-        req.body.idContact,
+        req.body.idContact
       ]
     );
     if (rows.affectedRows > 0) {
-      res.send("La actualizacion fue realizada correctamente");
+      res.json({value:1});
     } else {
-      res.send("No se realizo la actualizacion");
+      res.json({value:0});
     }
     db.end();
   } catch (E) {
@@ -589,6 +589,27 @@ export const addBusinessType = async (req, res) => {
     console.log(e);
   }
 };
+
+// Metodo para actualizar tipo de negocio
+
+export const updateBusinessType = async (req, res) => {
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "UPDATE businesstype SET bName = ?, bDescription=? WHERE idBusinessType =?;",
+      [req.body.bName, req.body.bDescription, req.body.idBusinessType]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // Metodo para agregar Clasificacion de Productos
 export const addTechnology = async (req, res) => {
   try {
@@ -603,6 +624,25 @@ export const addTechnology = async (req, res) => {
     console.log(e);
   }
 };
+//Metodo para actualizar Tecnologia de Productos
+export const UpdateTechnology = async (req, res) => {
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "UPDATE technologies SET nameTechnology = ? WHERE idTechnology = ?;",
+      [req.body.nameTechnology, req.body.idTechnology]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // Metodo para agregar Clasificacion de Proveedores
 
 export const addsClasification = async (req, res) => {
@@ -613,6 +653,24 @@ export const addsClasification = async (req, res) => {
       [req.body.clasificationName]
     );
     res.json({ value: 1 });
+    db.end();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const UpdatesClasification = async (req, res) => {
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "UPDATE sclasification SET clasificationName = ? WHERE idClasification = ?;",
+      [req.body.clasificationName, req.body.idClasification]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
     db.end();
   } catch (e) {
     console.log(e);
@@ -633,6 +691,26 @@ export const addaType = async (req, res) => {
   }
   db.end();
 };
+
+// Metodo para Actualizar Tipos de Domicilio
+export const updateAddType = async (req, res) =>{
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "UPDATE adresstype SET aType = ? WHERE idadressType = ?;",
+      [req.body.aType, req.body.idadressType]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 // Metodo para listar las tenologias del producto
 export const listTech = async (req, res) => {
   const db = await connect();
