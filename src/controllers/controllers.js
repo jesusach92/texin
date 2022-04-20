@@ -23,16 +23,20 @@ const date = () => {
 
 // 1.- Listar proveedores con el tipo de negocio y el tipo de proveedor que son
 export const supplielist = async (req, res) => {
-  const db = await connect();
-  const [rows] = await db.query(
-    "SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification ORDER BY sDateUpdate DESC;"
-  );
-  if (!rows) {
-    res.json([]);
-  } else {
-    res.json(rows);
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification ORDER BY sDateUpdate DESC;"
+    );
+    if (!rows) {
+      res.json([]);
+    } else {
+      res.json(rows);
+    }
+    db.end();
+  } catch (error) {
+    console.log(error);
   }
-  db.end();
 };
 
 // 2.-Obtener Proveedor por Id
@@ -75,8 +79,8 @@ export const supplieFullAdress = async (req, res) => {
 //4.-Obtener los contactos del domicilio
 
 export const adressContact = async (req, res) => {
-  const db = await connect();
-  try {
+  
+  try {const db = await connect();
     const [rows] = await db.query(
       "SELECT * FROM contactsupplies WHERE FkAdressCont =? ORDER BY contactPrincipal DESC;",
       [req.params.id]
@@ -86,10 +90,11 @@ export const adressContact = async (req, res) => {
     } else {
       res.json(rows);
     }
+    db.end();
   } catch (e) {
     console.log(e);
   }
-  db.end();
+  
 };
 
 //5.-Obtener todos los contactos del proveedor
@@ -135,8 +140,8 @@ export const supplieProducts = async (req, res) => {
 //7.-Agregar Proveedor
 
 export const addSupplie = async (req, res) => {
-  const db = await connect();
   try {
+    const db = await connect();
     const [rows] = await db.query(
       "INSERT INTO supplie (nameSupplie, FkBusinessType, FkClasification, sDateInitial, sDateUpdate) VALUES (?, ?, ?, ?, ?); ",
       [
@@ -148,10 +153,10 @@ export const addSupplie = async (req, res) => {
       ]
     );
     res.json({ insertId: rows.insertId, value: 1 });
+    db.end();
   } catch (e) {
     res.json({ value: 0 });
   }
-  db.end();
 };
 
 //8.-Agregar Domicilio a proveedor
@@ -303,13 +308,13 @@ export const EditContact = async (req, res) => {
         req.body.cellphoneNumber,
         req.body.comments,
         date(),
-        req.body.idContact
+        req.body.idContact,
       ]
     );
     if (rows.affectedRows > 0) {
-      res.json({value:1});
+      res.json({ value: 1 });
     } else {
-      res.json({value:0});
+      res.json({ value: 0 });
     }
     db.end();
   } catch (E) {
@@ -693,7 +698,7 @@ export const addaType = async (req, res) => {
 };
 
 // Metodo para Actualizar Tipos de Domicilio
-export const updateAddType = async (req, res) =>{
+export const updateAddType = async (req, res) => {
   try {
     const db = await connect();
     const [rows] = await db.query(
@@ -709,7 +714,7 @@ export const updateAddType = async (req, res) =>{
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 // Metodo para listar las tenologias del producto
 export const listTech = async (req, res) => {
