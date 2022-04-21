@@ -38,7 +38,7 @@ import {
   UpdatesClasification,
   updateAddType,
 } from "../controllers/controllers";
-import { userRegister } from "../controllers/users";
+import { serchUser, userRegister } from "../controllers/users";
 
 const router = Router();
 
@@ -165,5 +165,8 @@ router.put("/Actualizar/Clasificacion", UpdatesClasification);
 router.put("/Actualizar/TipoDomicilio", updateAddType);
 
 // Registrar Usuario
-router.post("/Registrar/usuario", userRegister)
+router.post("/Registrar/usuario", userRegister);
+
+//Autenticar Usuario
+router.post("/Autenticar",serchUser)
 export default router;
