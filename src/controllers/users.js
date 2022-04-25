@@ -29,15 +29,13 @@ export const serchUser = async (req, res) => {
   try {
     const db = await connect();
     const [[rows]] = await db.query(
-      "SELECT idUsers FROM users WHERE nameUser = ?;",
-      [req.body.nameUser, req.body.passwordUser]
+      "SELECT idUsers FROM users WHERE nameUser = BINARY ?;",
+      [req.body.nameUser]
     );
     if (rows) {
       const [[user]] = await db.query("SELECT * FROM users WHERE idUsers = ?", [
-        rows.idUsers,
+        encodeURI(rows.idUsers),
       ]);
-      console.log(md5(req.body.passwordUser));
-      console.log(user.passwordUser);
       md5(req.body.passwordUser) === user.passwordUser
         ? res
             .status(200)
@@ -47,7 +45,8 @@ export const serchUser = async (req, res) => {
                 id: user.idUsers,
                 nameUser: user.nameUser,
                 namePerson:user.namePerson,
-                roleUser:user.FkRole
+                roleUser:user.FkRole,
+                tokenUser : '1234dcsdfs'
               },
             })
         : res.status(404).send("Contraseña Incorrecta");

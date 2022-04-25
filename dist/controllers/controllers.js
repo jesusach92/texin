@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.supplielist = exports.supplieProducts = exports.supplieFullAdress = exports.supplieContacts = exports.supplieById = exports.productlist = exports.productSupplies = exports.productId = exports.listTech = exports.listSClasificacion = exports.listBusiness = exports.listAType = exports.editProduct = exports.deleteSupply = exports.deleteSupplie = exports.deleteProduct = exports.deleteContact = exports.deleteAdress = exports.adressContact = exports.addsClasification = exports.addaType = exports.addTechnology = exports.addSupplie = exports.addProduct = exports.addContact = exports.addBusinessType = exports.addAdress = exports.GetSupply = exports.EditSupply = exports.EditSupplie = exports.EditContact = exports.EditAdress = exports.AsingProductSupplie = void 0;
+exports.updateBusinessType = exports.updateAddType = exports.supplielist = exports.supplieProducts = exports.supplieFullAdress = exports.supplieContacts = exports.supplieById = exports.productlist = exports.productSupplies = exports.productId = exports.listTech = exports.listSClasificacion = exports.listBusiness = exports.listAType = exports.editProduct = exports.deleteSupply = exports.deleteSupplie = exports.deleteProduct = exports.deleteContact = exports.deleteAdress = exports.adressContact = exports.addsClasification = exports.addaType = exports.addTechnology = exports.addSupplie = exports.addProduct = exports.addContact = exports.addBusinessType = exports.addAdress = exports.UpdatesClasification = exports.UpdateTechnology = exports.GetSupply = exports.EditSupply = exports.EditSupplie = exports.EditContact = exports.EditAdress = exports.AsingProductSupplie = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -21,30 +21,30 @@ function UpdateSup(_x, _x2) {
 
 
 function _UpdateSup() {
-  _UpdateSup = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee34(Id, db) {
-    return _regenerator["default"].wrap(function _callee34$(_context34) {
+  _UpdateSup = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee38(Id, db) {
+    return _regenerator["default"].wrap(function _callee38$(_context38) {
       while (1) {
-        switch (_context34.prev = _context34.next) {
+        switch (_context38.prev = _context38.next) {
           case 0:
-            _context34.prev = 0;
-            _context34.next = 3;
+            _context38.prev = 0;
+            _context38.next = 3;
             return db.query("UPDATE supplie SET  supplie.sDateUpdate=? WHERE idSupplie=?;", [date(), Id]);
 
           case 3:
-            _context34.next = 8;
+            _context38.next = 8;
             break;
 
           case 5:
-            _context34.prev = 5;
-            _context34.t0 = _context34["catch"](0);
-            console.log(_context34.t0);
+            _context38.prev = 5;
+            _context38.t0 = _context38["catch"](0);
+            console.log(_context38.t0);
 
           case 8:
           case "end":
-            return _context34.stop();
+            return _context38.stop();
         }
       }
-    }, _callee34, null, [[0, 5]]);
+    }, _callee38, null, [[0, 5]]);
   }));
   return _UpdateSup.apply(this, arguments);
 }
@@ -66,15 +66,16 @@ var supplielist = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            _context.prev = 0;
+            _context.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context.sent;
-            _context.next = 5;
+            _context.next = 6;
             return db.query("SELECT * FROM supplie t1 JOIN businesstype t2 JOIN sclasification t3 ON t1.FkBusinessType=t2.idBusinessType AND t1.FkClasification=t3.idClasification ORDER BY sDateUpdate DESC;");
 
-          case 5:
+          case 6:
             _yield$db$query = _context.sent;
             _yield$db$query2 = (0, _slicedToArray2["default"])(_yield$db$query, 1);
             rows = _yield$db$query2[0];
@@ -86,13 +87,20 @@ var supplielist = /*#__PURE__*/function () {
             }
 
             db.end();
+            _context.next = 16;
+            break;
 
-          case 10:
+          case 13:
+            _context.prev = 13;
+            _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
+
+          case 16:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee);
+    }, _callee, null, [[0, 13]]);
   }));
 
   return function supplielist(_x3, _x4) {
@@ -215,12 +223,12 @@ var adressContact = /*#__PURE__*/function () {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.next = 2;
+            _context4.prev = 0;
+            _context4.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context4.sent;
-            _context4.prev = 3;
             _context4.next = 6;
             return db.query("SELECT * FROM contactsupplies WHERE FkAdressCont =? ORDER BY contactPrincipal DESC;", [req.params.id]);
 
@@ -235,23 +243,21 @@ var adressContact = /*#__PURE__*/function () {
               res.json(rows);
             }
 
-            _context4.next = 15;
+            db.end();
+            _context4.next = 16;
             break;
 
-          case 12:
-            _context4.prev = 12;
-            _context4.t0 = _context4["catch"](3);
+          case 13:
+            _context4.prev = 13;
+            _context4.t0 = _context4["catch"](0);
             console.log(_context4.t0);
-
-          case 15:
-            db.end();
 
           case 16:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[3, 12]]);
+    }, _callee4, null, [[0, 13]]);
   }));
 
   return function adressContact(_x9, _x10) {
@@ -380,12 +386,12 @@ var addSupplie = /*#__PURE__*/function () {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
-            _context7.next = 2;
+            _context7.prev = 0;
+            _context7.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context7.sent;
-            _context7.prev = 3;
             _context7.next = 6;
             return db.query("INSERT INTO supplie (nameSupplie, FkBusinessType, FkClasification, sDateInitial, sDateUpdate) VALUES (?, ?, ?, ?, ?); ", [req.body.nameSupplie, req.body.FkBusinessType, req.body.FkClasification, date(), date()]);
 
@@ -397,25 +403,23 @@ var addSupplie = /*#__PURE__*/function () {
               insertId: rows.insertId,
               value: 1
             });
-            _context7.next = 15;
+            db.end();
+            _context7.next = 16;
             break;
 
-          case 12:
-            _context7.prev = 12;
-            _context7.t0 = _context7["catch"](3);
+          case 13:
+            _context7.prev = 13;
+            _context7.t0 = _context7["catch"](0);
             res.json({
               value: 0
             });
-
-          case 15:
-            db.end();
 
           case 16:
           case "end":
             return _context7.stop();
         }
       }
-    }, _callee7, null, [[3, 12]]);
+    }, _callee7, null, [[0, 13]]);
   }));
 
   return function addSupplie(_x15, _x16) {
@@ -719,9 +723,13 @@ var EditContact = /*#__PURE__*/function () {
             rows = _yield$db$query32[0];
 
             if (rows.affectedRows > 0) {
-              res.send("La actualizacion fue realizada correctamente");
+              res.json({
+                value: 1
+              });
             } else {
-              res.send("No se realizo la actualizacion");
+              res.json({
+                value: 0
+              });
             }
 
             db.end();
@@ -1487,12 +1495,12 @@ var addBusinessType = /*#__PURE__*/function () {
   return function addBusinessType(_x53, _x54) {
     return _ref27.apply(this, arguments);
   };
-}(); // Metodo para agregar Clasificacion de Productos
+}(); // Metodo para actualizar tipo de negocio
 
 
 exports.addBusinessType = addBusinessType;
 
-var addTechnology = /*#__PURE__*/function () {
+var updateBusinessType = /*#__PURE__*/function () {
   var _ref28 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee27(req, res) {
     var db, _yield$db$query61, _yield$db$query62, rows;
 
@@ -1507,15 +1515,23 @@ var addTechnology = /*#__PURE__*/function () {
           case 3:
             db = _context27.sent;
             _context27.next = 6;
-            return db.query("INSERT INTO technologies (nameTechnology) VALUES (?);", [req.body.nameTechnology]);
+            return db.query("UPDATE businesstype SET bName = ?, bDescription=? WHERE idBusinessType =?;", [req.body.bName, req.body.bDescription, req.body.idBusinessType]);
 
           case 6:
             _yield$db$query61 = _context27.sent;
             _yield$db$query62 = (0, _slicedToArray2["default"])(_yield$db$query61, 1);
             rows = _yield$db$query62[0];
-            res.json({
-              value: 1
-            });
+
+            if (rows.affectedRows > 0) {
+              res.json({
+                value: 1
+              });
+            } else {
+              res.json({
+                value: 0
+              });
+            }
+
             db.end();
             _context27.next = 16;
             break;
@@ -1533,15 +1549,15 @@ var addTechnology = /*#__PURE__*/function () {
     }, _callee27, null, [[0, 13]]);
   }));
 
-  return function addTechnology(_x55, _x56) {
+  return function updateBusinessType(_x55, _x56) {
     return _ref28.apply(this, arguments);
   };
-}(); // Metodo para agregar Clasificacion de Proveedores
+}(); // Metodo para agregar Clasificacion de Productos
 
 
-exports.addTechnology = addTechnology;
+exports.updateBusinessType = updateBusinessType;
 
-var addsClasification = /*#__PURE__*/function () {
+var addTechnology = /*#__PURE__*/function () {
   var _ref29 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee28(req, res) {
     var db, _yield$db$query63, _yield$db$query64, rows;
 
@@ -1556,7 +1572,7 @@ var addsClasification = /*#__PURE__*/function () {
           case 3:
             db = _context28.sent;
             _context28.next = 6;
-            return db.query("INSERT INTO sclasification (clasificationName) VALUES (?);", [req.body.clasificationName]);
+            return db.query("INSERT INTO technologies (nameTechnology) VALUES (?);", [req.body.nameTechnology]);
 
           case 6:
             _yield$db$query63 = _context28.sent;
@@ -1582,15 +1598,15 @@ var addsClasification = /*#__PURE__*/function () {
     }, _callee28, null, [[0, 13]]);
   }));
 
-  return function addsClasification(_x57, _x58) {
+  return function addTechnology(_x57, _x58) {
     return _ref29.apply(this, arguments);
   };
-}(); //Metodo para agregar Tipos de Domicilio
+}(); //Metodo para actualizar Tecnologia de Productos
 
 
-exports.addsClasification = addsClasification;
+exports.addTechnology = addTechnology;
 
-var addaType = /*#__PURE__*/function () {
+var UpdateTechnology = /*#__PURE__*/function () {
   var _ref30 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee29(req, res) {
     var db, _yield$db$query65, _yield$db$query66, rows;
 
@@ -1598,50 +1614,56 @@ var addaType = /*#__PURE__*/function () {
       while (1) {
         switch (_context29.prev = _context29.next) {
           case 0:
-            _context29.next = 2;
+            _context29.prev = 0;
+            _context29.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context29.sent;
-            _context29.prev = 3;
             _context29.next = 6;
-            return db.query("INSERT INTO adresstype (aType) VALUES (?);", [req.body.aType]);
+            return db.query("UPDATE technologies SET nameTechnology = ? WHERE idTechnology = ?;", [req.body.nameTechnology, req.body.idTechnology]);
 
           case 6:
             _yield$db$query65 = _context29.sent;
             _yield$db$query66 = (0, _slicedToArray2["default"])(_yield$db$query65, 1);
             rows = _yield$db$query66[0];
-            res.json({
-              value: 1
-            });
-            _context29.next = 15;
+
+            if (rows.affectedRows > 0) {
+              res.json({
+                value: 1
+              });
+            } else {
+              res.json({
+                value: 0
+              });
+            }
+
+            db.end();
+            _context29.next = 16;
             break;
 
-          case 12:
-            _context29.prev = 12;
-            _context29.t0 = _context29["catch"](3);
+          case 13:
+            _context29.prev = 13;
+            _context29.t0 = _context29["catch"](0);
             console.log(_context29.t0);
-
-          case 15:
-            db.end();
 
           case 16:
           case "end":
             return _context29.stop();
         }
       }
-    }, _callee29, null, [[3, 12]]);
+    }, _callee29, null, [[0, 13]]);
   }));
 
-  return function addaType(_x59, _x60) {
+  return function UpdateTechnology(_x59, _x60) {
     return _ref30.apply(this, arguments);
   };
-}(); // Metodo para listar las tenologias del producto
+}(); // Metodo para agregar Clasificacion de Proveedores
 
 
-exports.addaType = addaType;
+exports.UpdateTechnology = UpdateTechnology;
 
-var listTech = /*#__PURE__*/function () {
+var addsClasification = /*#__PURE__*/function () {
   var _ref31 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee30(req, res) {
     var db, _yield$db$query67, _yield$db$query68, rows;
 
@@ -1649,44 +1671,47 @@ var listTech = /*#__PURE__*/function () {
       while (1) {
         switch (_context30.prev = _context30.next) {
           case 0:
-            _context30.next = 2;
+            _context30.prev = 0;
+            _context30.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context30.sent;
-            _context30.next = 5;
-            return db.query("SELECT * FROM technologies;");
+            _context30.next = 6;
+            return db.query("INSERT INTO sclasification (clasificationName) VALUES (?);", [req.body.clasificationName]);
 
-          case 5:
+          case 6:
             _yield$db$query67 = _context30.sent;
             _yield$db$query68 = (0, _slicedToArray2["default"])(_yield$db$query67, 1);
             rows = _yield$db$query68[0];
-
-            if (!rows) {
-              res.json([]);
-            } else {
-              res.json(rows);
-            }
-
+            res.json({
+              value: 1
+            });
             db.end();
+            _context30.next = 16;
+            break;
 
-          case 10:
+          case 13:
+            _context30.prev = 13;
+            _context30.t0 = _context30["catch"](0);
+            console.log(_context30.t0);
+
+          case 16:
           case "end":
             return _context30.stop();
         }
       }
-    }, _callee30);
+    }, _callee30, null, [[0, 13]]);
   }));
 
-  return function listTech(_x61, _x62) {
+  return function addsClasification(_x61, _x62) {
     return _ref31.apply(this, arguments);
   };
-}(); //Metodo para listar los tipos de domicilio
+}();
 
+exports.addsClasification = addsClasification;
 
-exports.listTech = listTech;
-
-var listAType = /*#__PURE__*/function () {
+var UpdatesClasification = /*#__PURE__*/function () {
   var _ref32 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee31(req, res) {
     var db, _yield$db$query69, _yield$db$query70, rows;
 
@@ -1694,44 +1719,56 @@ var listAType = /*#__PURE__*/function () {
       while (1) {
         switch (_context31.prev = _context31.next) {
           case 0:
-            _context31.next = 2;
+            _context31.prev = 0;
+            _context31.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context31.sent;
-            _context31.next = 5;
-            return db.query("SELECT * FROM adresstype;");
+            _context31.next = 6;
+            return db.query("UPDATE sclasification SET clasificationName = ? WHERE idClasification = ?;", [req.body.clasificationName, req.body.idClasification]);
 
-          case 5:
+          case 6:
             _yield$db$query69 = _context31.sent;
             _yield$db$query70 = (0, _slicedToArray2["default"])(_yield$db$query69, 1);
             rows = _yield$db$query70[0];
 
-            if (!rows) {
-              res.json([]);
+            if (rows.affectedRows > 0) {
+              res.json({
+                value: 1
+              });
             } else {
-              res.json(rows);
+              res.json({
+                value: 0
+              });
             }
 
             db.end();
+            _context31.next = 16;
+            break;
 
-          case 10:
+          case 13:
+            _context31.prev = 13;
+            _context31.t0 = _context31["catch"](0);
+            console.log(_context31.t0);
+
+          case 16:
           case "end":
             return _context31.stop();
         }
       }
-    }, _callee31);
+    }, _callee31, null, [[0, 13]]);
   }));
 
-  return function listAType(_x63, _x64) {
+  return function UpdatesClasification(_x63, _x64) {
     return _ref32.apply(this, arguments);
   };
-}(); //Metodo para listar los tipos de negocio
+}(); //Metodo para agregar Tipos de Domicilio
 
 
-exports.listAType = listAType;
+exports.UpdatesClasification = UpdatesClasification;
 
-var listBusiness = /*#__PURE__*/function () {
+var addaType = /*#__PURE__*/function () {
   var _ref33 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee32(req, res) {
     var db, _yield$db$query71, _yield$db$query72, rows;
 
@@ -1744,39 +1781,45 @@ var listBusiness = /*#__PURE__*/function () {
 
           case 2:
             db = _context32.sent;
-            _context32.next = 5;
-            return db.query("SELECT * FROM businesstype;");
+            _context32.prev = 3;
+            _context32.next = 6;
+            return db.query("INSERT INTO adresstype (aType) VALUES (?);", [req.body.aType]);
 
-          case 5:
+          case 6:
             _yield$db$query71 = _context32.sent;
             _yield$db$query72 = (0, _slicedToArray2["default"])(_yield$db$query71, 1);
             rows = _yield$db$query72[0];
+            res.json({
+              value: 1
+            });
+            _context32.next = 15;
+            break;
 
-            if (!rows) {
-              res.json([]);
-            } else {
-              res.json(rows);
-            }
+          case 12:
+            _context32.prev = 12;
+            _context32.t0 = _context32["catch"](3);
+            console.log(_context32.t0);
 
+          case 15:
             db.end();
 
-          case 10:
+          case 16:
           case "end":
             return _context32.stop();
         }
       }
-    }, _callee32);
+    }, _callee32, null, [[3, 12]]);
   }));
 
-  return function listBusiness(_x65, _x66) {
+  return function addaType(_x65, _x66) {
     return _ref33.apply(this, arguments);
   };
-}(); // Metodo para listar la clasificacion de proveddores
+}(); // Metodo para Actualizar Tipos de Domicilio
 
 
-exports.listBusiness = listBusiness;
+exports.addaType = addaType;
 
-var listSClasificacion = /*#__PURE__*/function () {
+var updateAddType = /*#__PURE__*/function () {
   var _ref34 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee33(req, res) {
     var db, _yield$db$query73, _yield$db$query74, rows;
 
@@ -1784,18 +1827,75 @@ var listSClasificacion = /*#__PURE__*/function () {
       while (1) {
         switch (_context33.prev = _context33.next) {
           case 0:
-            _context33.next = 2;
+            _context33.prev = 0;
+            _context33.next = 3;
             return (0, _database.connect)();
 
-          case 2:
+          case 3:
             db = _context33.sent;
-            _context33.next = 5;
-            return db.query("SELECT * FROM sclasification;");
+            _context33.next = 6;
+            return db.query("UPDATE adresstype SET aType = ? WHERE idadressType = ?;", [req.body.aType, req.body.idadressType]);
 
-          case 5:
+          case 6:
             _yield$db$query73 = _context33.sent;
             _yield$db$query74 = (0, _slicedToArray2["default"])(_yield$db$query73, 1);
             rows = _yield$db$query74[0];
+
+            if (rows.affectedRows > 0) {
+              res.json({
+                value: 1
+              });
+            } else {
+              res.json({
+                value: 0
+              });
+            }
+
+            db.end();
+            _context33.next = 16;
+            break;
+
+          case 13:
+            _context33.prev = 13;
+            _context33.t0 = _context33["catch"](0);
+            console.log(_context33.t0);
+
+          case 16:
+          case "end":
+            return _context33.stop();
+        }
+      }
+    }, _callee33, null, [[0, 13]]);
+  }));
+
+  return function updateAddType(_x67, _x68) {
+    return _ref34.apply(this, arguments);
+  };
+}(); // Metodo para listar las tenologias del producto
+
+
+exports.updateAddType = updateAddType;
+
+var listTech = /*#__PURE__*/function () {
+  var _ref35 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee34(req, res) {
+    var db, _yield$db$query75, _yield$db$query76, rows;
+
+    return _regenerator["default"].wrap(function _callee34$(_context34) {
+      while (1) {
+        switch (_context34.prev = _context34.next) {
+          case 0:
+            _context34.next = 2;
+            return (0, _database.connect)();
+
+          case 2:
+            db = _context34.sent;
+            _context34.next = 5;
+            return db.query("SELECT * FROM technologies;");
+
+          case 5:
+            _yield$db$query75 = _context34.sent;
+            _yield$db$query76 = (0, _slicedToArray2["default"])(_yield$db$query75, 1);
+            rows = _yield$db$query76[0];
 
             if (!rows) {
               res.json([]);
@@ -1807,14 +1907,149 @@ var listSClasificacion = /*#__PURE__*/function () {
 
           case 10:
           case "end":
-            return _context33.stop();
+            return _context34.stop();
         }
       }
-    }, _callee33);
+    }, _callee34);
   }));
 
-  return function listSClasificacion(_x67, _x68) {
-    return _ref34.apply(this, arguments);
+  return function listTech(_x69, _x70) {
+    return _ref35.apply(this, arguments);
+  };
+}(); //Metodo para listar los tipos de domicilio
+
+
+exports.listTech = listTech;
+
+var listAType = /*#__PURE__*/function () {
+  var _ref36 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee35(req, res) {
+    var db, _yield$db$query77, _yield$db$query78, rows;
+
+    return _regenerator["default"].wrap(function _callee35$(_context35) {
+      while (1) {
+        switch (_context35.prev = _context35.next) {
+          case 0:
+            _context35.next = 2;
+            return (0, _database.connect)();
+
+          case 2:
+            db = _context35.sent;
+            _context35.next = 5;
+            return db.query("SELECT * FROM adresstype;");
+
+          case 5:
+            _yield$db$query77 = _context35.sent;
+            _yield$db$query78 = (0, _slicedToArray2["default"])(_yield$db$query77, 1);
+            rows = _yield$db$query78[0];
+
+            if (!rows) {
+              res.json([]);
+            } else {
+              res.json(rows);
+            }
+
+            db.end();
+
+          case 10:
+          case "end":
+            return _context35.stop();
+        }
+      }
+    }, _callee35);
+  }));
+
+  return function listAType(_x71, _x72) {
+    return _ref36.apply(this, arguments);
+  };
+}(); //Metodo para listar los tipos de negocio
+
+
+exports.listAType = listAType;
+
+var listBusiness = /*#__PURE__*/function () {
+  var _ref37 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee36(req, res) {
+    var db, _yield$db$query79, _yield$db$query80, rows;
+
+    return _regenerator["default"].wrap(function _callee36$(_context36) {
+      while (1) {
+        switch (_context36.prev = _context36.next) {
+          case 0:
+            _context36.next = 2;
+            return (0, _database.connect)();
+
+          case 2:
+            db = _context36.sent;
+            _context36.next = 5;
+            return db.query("SELECT * FROM businesstype;");
+
+          case 5:
+            _yield$db$query79 = _context36.sent;
+            _yield$db$query80 = (0, _slicedToArray2["default"])(_yield$db$query79, 1);
+            rows = _yield$db$query80[0];
+
+            if (!rows) {
+              res.json([]);
+            } else {
+              res.json(rows);
+            }
+
+            db.end();
+
+          case 10:
+          case "end":
+            return _context36.stop();
+        }
+      }
+    }, _callee36);
+  }));
+
+  return function listBusiness(_x73, _x74) {
+    return _ref37.apply(this, arguments);
+  };
+}(); // Metodo para listar la clasificacion de proveddores
+
+
+exports.listBusiness = listBusiness;
+
+var listSClasificacion = /*#__PURE__*/function () {
+  var _ref38 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee37(req, res) {
+    var db, _yield$db$query81, _yield$db$query82, rows;
+
+    return _regenerator["default"].wrap(function _callee37$(_context37) {
+      while (1) {
+        switch (_context37.prev = _context37.next) {
+          case 0:
+            _context37.next = 2;
+            return (0, _database.connect)();
+
+          case 2:
+            db = _context37.sent;
+            _context37.next = 5;
+            return db.query("SELECT * FROM sclasification;");
+
+          case 5:
+            _yield$db$query81 = _context37.sent;
+            _yield$db$query82 = (0, _slicedToArray2["default"])(_yield$db$query81, 1);
+            rows = _yield$db$query82[0];
+
+            if (!rows) {
+              res.json([]);
+            } else {
+              res.json(rows);
+            }
+
+            db.end();
+
+          case 10:
+          case "end":
+            return _context37.stop();
+        }
+      }
+    }, _callee37);
+  }));
+
+  return function listSClasificacion(_x75, _x76) {
+    return _ref38.apply(this, arguments);
   };
 }(); // Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),
 
