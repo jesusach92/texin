@@ -79,8 +79,8 @@ export const supplieFullAdress = async (req, res) => {
 //4.-Obtener los contactos del domicilio
 
 export const adressContact = async (req, res) => {
-  
-  try {const db = await connect();
+  try {
+    const db = await connect();
     const [rows] = await db.query(
       "SELECT * FROM contactsupplies WHERE FkAdressCont =? ORDER BY contactPrincipal DESC;",
       [req.params.id]
@@ -94,7 +94,6 @@ export const adressContact = async (req, res) => {
   } catch (e) {
     console.log(e);
   }
-  
 };
 
 //5.-Obtener todos los contactos del proveedor
@@ -755,13 +754,33 @@ export const listBusiness = async (req, res) => {
 
 // Metodo para listar la clasificacion de proveddores
 export const listSClasificacion = async (req, res) => {
-  const db = await connect();
-  const [rows] = await db.query("SELECT * FROM sclasification;");
-  if (!rows) {
-    res.json([]);
-  } else {
-    res.json(rows);
+  try {
+    const db = await connect();
+    const [rows] = await db.query("SELECT * FROM sclasification;");
+    if (!rows) {
+      res.json([]);
+    } else {
+      res.json(rows);
+    }
+    db.end();
+  } catch (e) {
+    console.log(e);
   }
-  db.end();
+};
+
+export const getDataAdmin = async (req, res) => {
+  try {
+    let data;
+    const db=await connect();
+    let [[rows]]= await db.query("SELECT count(idSupplie) AS Proveedores FROM supplie;")
+    data = {...data,Proveedores:rows.Proveedores};
+   [[rows]]= await db.query("SELECT count(idProduct) AS Productos FROM products;")
+   data = {...data,Productos:rows.Productos};
+   [[rows]]= await db.query("SELECT count(idContact) AS Contactos FROM contactsupplies;")
+   data = {...data,Contactos:rows.Contactos};
+   res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
 };
 // Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),

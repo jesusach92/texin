@@ -37,6 +37,7 @@ import {
   UpdateTechnology,
   UpdatesClasification,
   updateAddType,
+  getDataAdmin,
 } from "../controllers/controllers";
 import { serchUser, userRegister } from "../controllers/users";
 
@@ -168,5 +169,8 @@ router.put("/Actualizar/TipoDomicilio", updateAddType);
 router.post("/Registrar/usuario", userRegister);
 
 //Autenticar Usuario
-router.post("/Autenticar",serchUser)
+router.post("/Autenticar", serchUser);
+
+//Obtener Data para el Usuario
+router.get("/DataAdmin", getDataAdmin);
 export default router;
