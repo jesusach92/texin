@@ -39,7 +39,7 @@ import {
   updateAddType,
   getDataAdmin,
 } from "../controllers/controllers";
-import { serchUser, userRegister } from "../controllers/users";
+import { addUser, deleteUSer, getListUsers, getRoleUser, serchUser, userRegister } from "../controllers/users";
 
 const router = Router();
 
@@ -173,4 +173,16 @@ router.post("/Autenticar", serchUser);
 
 //Obtener Data para el Usuario
 router.get("/DataAdmin", getDataAdmin);
+
+//Obtener Lista de Usuarios para Admin
+router.get("/UsuariosAdmin", getListUsers);
+
+//Borrar Usuario
+router.delete("/Borrar/Usuario/:id", deleteUSer);
+
+// Obtener los Roles a Asignar
+router.get("/Roles",getRoleUser)
+
+//Registrar Usuario
+router.post("/Agregar/Usuario", addUser)
 export default router;
