@@ -39,7 +39,7 @@ import {
   updateAddType,
   getDataAdmin,
 } from "../controllers/controllers";
-import { addUser, deleteUSer, getListUsers, getRoleUser, serchUser, userRegister } from "../controllers/users";
+import { addUser, deleteUSer, getListUsers, getRoleUser, serchUser, updateUser, userRegister } from "../controllers/users";
 
 const router = Router();
 
@@ -185,4 +185,7 @@ router.get("/Roles",getRoleUser)
 
 //Registrar Usuario
 router.post("/Agregar/Usuario", addUser)
+
+//Actualizar Usuario
+router.put("/Actualizar/Usuario",updateUser)
 export default router;

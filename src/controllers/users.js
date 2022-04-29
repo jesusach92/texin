@@ -40,10 +40,10 @@ export const serchUser = async (req, res) => {
         ? res.status(200).json({
             message: "Acceso concedido",
             user: {
-              id: user.idUsers,
+              idUsers: user.idUsers,
               nameUser: user.nameUser,
               namePerson: user.namePerson,
-              roleUser: user.FkRole,
+              FkRole: user.FkRole,
               tokenUser: "1234dcsdfs",
             },
           })
@@ -62,7 +62,7 @@ export const getListUsers = async (req, res) => {
   try {
     const db = await connect();
     const [rows] = await db.query(
-      "SELECT idUsers, nameUser, namePerson,idRole, nameRole, privileges FROM users inner join role on FkRole= idRole;"
+      "SELECT idUsers, nameUser, namePerson,FkRole ,idRole, nameRole, privileges FROM users inner join role on FkRole= idRole;"
     );
     res.json(rows);
     db.end();
@@ -124,3 +124,21 @@ export const addUser = async (req, res) => {
     console.log(error)
   }
 };
+
+// Actualizar Usuario
+export const updateUser = async( req, res) =>{
+  try {
+    const db= await connect();
+    const [rows] = await db.query("UPDATE users set FkRole=?, nameUser=?,passwordUser=md5(?) , namePerson=? WHERE idUsers=?;",[
+      req.body.FkRole,
+      req.body.nameUser,
+      req.body.passwordUser,
+      req.body.namePerson,
+      req.body.idUsers
+
+    ])
+    rows.affectedRows > 0 ? res.json({value:1}): res.json({value:0})
+  } catch (error) {
+    console.log(error)
+  }
+}
