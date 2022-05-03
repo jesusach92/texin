@@ -38,6 +38,10 @@ import {
   UpdatesClasification,
   updateAddType,
   getDataAdmin,
+  deleteBusinessType,
+  deleteSclasification,
+  deleteTechnology,
+  deleteAddType,
 } from "../controllers/controllers";
 import { addUser, deleteUSer, getListUsers, getRoleUser, serchUser, updateUser, userRegister } from "../controllers/users";
 
@@ -132,8 +136,13 @@ router.delete("/Borrar/Producto/:id", deleteProduct);
 //Metodo para agregar tipo de negocio
 router.post("/Agregar/Negocio", addBusinessType);
 
+// Metodo para eliminar tipo de negocio
+router.delete("/Borrar/TNegocio/:id",deleteBusinessType)
 //Metodo para agregar Tecnologia del producto
 router.post("/Agregar/Tecnologia", addTechnology);
+
+//Ruta para borrar tecnologia 
+router.delete("/Borrar/Tecnologia/:id",deleteTechnology)
 
 //Metodo para que regresa los tipos de tecnolocia que existen
 router.get("/Tecnologias", listTech);
@@ -141,8 +150,14 @@ router.get("/Tecnologias", listTech);
 // Metodo para agregar clasificacion de proveedor
 router.post("/Agregar/Clasificacion", addsClasification);
 
+// Ruta para borrar clasificacion de proveedor
+router.delete("/Borrar/Clasificacion/:id", deleteSclasification)
+
 //Agregar tipo de domicilio
 router.post("/Agregar/TipoDomicilio", addaType);
+
+//Ruta para borrar tipo de domicilio
+router.delete("/Borrar/TipoDom/:id",deleteAddType)
 
 //Metodo que devuelve los tipos de domicilio
 router.get("/TiposDom", listAType);

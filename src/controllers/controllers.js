@@ -614,6 +614,25 @@ export const updateBusinessType = async (req, res) => {
   }
 };
 
+// Metodo para borrar tipo de negocio
+export const deleteBusinessType = async (req, res) => {
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "DELETE FROM businesstype WHERE idBusinessType=?",
+      [req.params.id]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Metodo para agregar Clasificacion de Productos
 export const addTechnology = async (req, res) => {
   try {
@@ -647,6 +666,27 @@ export const UpdateTechnology = async (req, res) => {
   }
 };
 
+// Borrar Tipo de Tecnologia 
+export const deleteTechnology = async (req, res) => {
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "DELETE FROM technologies WHERE idTechnology=?",
+      [req.params.id]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
 // Metodo para agregar Clasificacion de Proveedores
 
 export const addsClasification = async (req, res) => {
@@ -663,6 +703,8 @@ export const addsClasification = async (req, res) => {
   }
 };
 
+
+// Metodo para actualizar clasificacion 
 export const UpdatesClasification = async (req, res) => {
   try {
     const db = await connect();
@@ -680,6 +722,28 @@ export const UpdatesClasification = async (req, res) => {
     console.log(e);
   }
 };
+
+// Metodo para borrar clasificacion de proveedor 
+
+export const deleteSclasification = async (req, res) => {
+  try {
+    const db = await connect();
+  
+    const [rows] = await db.query(
+      "DELETE FROM sclasification WHERE idClasification=?",
+      [req.params.id]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 //Metodo para agregar Tipos de Domicilio
 export const addaType = async (req, res) => {
@@ -712,6 +776,26 @@ export const updateAddType = async (req, res) => {
     db.end();
   } catch (e) {
     console.log(e);
+  }
+};
+
+// Metodo para borrar tipo de domicilio
+export const deleteAddType = async (req, res) => {
+  try {
+    const db = await connect();
+  
+    const [rows] = await db.query(
+      "DELETE FROM adresstype WHERE idadressType=?",
+      [req.params.id]
+    );
+    if (rows.affectedRows > 0) {
+      res.json({ value: 1 });
+    } else {
+      res.json({ value: 0 });
+    }
+    db.end();
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -771,16 +855,22 @@ export const listSClasificacion = async (req, res) => {
 export const getDataAdmin = async (req, res) => {
   try {
     let data;
-    const db=await connect();
-    let [[rows]]= await db.query("SELECT count(idSupplie) AS Proveedores FROM supplie;")
-    data = {...data,Proveedores:rows.Proveedores};
-   [[rows]]= await db.query("SELECT count(idProduct) AS Productos FROM products;")
-   data = {...data,Productos:rows.Productos};
-   [[rows]]= await db.query("SELECT count(idContact) AS Contactos FROM contactsupplies;")
-   data = {...data,Contactos:rows.Contactos};
-   res.json(data)
+    const db = await connect();
+    let [[rows]] = await db.query(
+      "SELECT count(idSupplie) AS Proveedores FROM supplie;"
+    );
+    data = { ...data, Proveedores: rows.Proveedores };
+    [[rows]] = await db.query(
+      "SELECT count(idProduct) AS Productos FROM products;"
+    );
+    data = { ...data, Productos: rows.Productos };
+    [[rows]] = await db.query(
+      "SELECT count(idContact) AS Contactos FROM contactsupplies;"
+    );
+    data = { ...data, Contactos: rows.Contactos };
+    res.json(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 // Para guardar fechas convertir a año, mes + 1 y dia con funciones getfullyear(), getmounth(), getdate(),
