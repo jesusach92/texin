@@ -213,7 +213,7 @@ export const addContact = async (req, res) => {
     );
     UpdateSup(FkSupplieAd, db);
     const [rows] = await db.query(
-      "INSERT INTO contactsupplies (FkAdressCont, nameContact, contactPrincipal, workposition, officeNumber, cellphoneNumber, comments) VALUES (?,?,?,?,?,?,?);",
+      "INSERT INTO contactsupplies (FkAdressCont, nameContact, contactPrincipal, workposition, officeNumber, cellphoneNumber,emailContact, comments) VALUES (?,?,?,?,?,?,?,?);",
       [
         req.body.FkAdressCont,
         req.body.nameContact,
@@ -221,6 +221,7 @@ export const addContact = async (req, res) => {
         req.body.workposition,
         req.body.officeNumber,
         req.body.cellphoneNumber,
+        req.body.emailContact,
         req.body.comments,
       ]
     );

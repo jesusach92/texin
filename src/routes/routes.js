@@ -110,7 +110,7 @@ router.delete("/Borrar/Domicilio/:id", deleteAdress);
 router.delete("/Borrar/Relacion/:id", deleteSupply);
 
 // Borrar Proveedor
-router.delete("/Borrar/proveedor/:id", deleteSupplie);
+router.delete("/Borrar/Proveedor/:id", deleteSupplie);
 
 // Metodos de Productos
 
