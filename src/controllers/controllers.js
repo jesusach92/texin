@@ -328,19 +328,21 @@ export const EditSupplie = async (req, res) => {
   try {
     const db = await connect();
     const [rows] = await db.query(
-      "UPDATE supplie SET nameSupplie =?, FKBusinessType =?, FkClasification=?,sDateUpdate =?WHERE idSupplie =?;",
+      "UPDATE supplie SET nameSupplie =?, FKBusinessType =?, FkClasification=?,sDateUpdate =?, emailSupplie = ?, contactPhone = ? WHERE idSupplie =?;",
       [
         req.body.nameSupplie,
-        req.body.FKBusinessType,
+        req.body.FkBusinessType,
         req.body.FkClasification,
         date(),
+        req.body.emailSupplie,
+        req.body.contactPhone,
         req.body.idSupplie,
       ]
     );
     if (rows.affectedRows > 0) {
-      res.send("La actualizacion fue realizada correctamente");
+      res.json({value: 1, message:"La actualizacion fue realizada correctamente"});
     } else {
-      res.send("No se realizo la actualizacion");
+      res.json({value:0, messaje:"No se realizo la actualizacion"});
     }
     db.end();
   } catch (e) {
