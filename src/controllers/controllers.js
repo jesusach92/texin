@@ -142,11 +142,13 @@ export const addSupplie = async (req, res) => {
   try {
     const db = await connect();
     const [rows] = await db.query(
-      "INSERT INTO supplie (nameSupplie, FkBusinessType, FkClasification, sDateInitial, sDateUpdate) VALUES (?, ?, ?, ?, ?); ",
+      "INSERT INTO supplie (nameSupplie, FkBusinessType, FkClasification,emailSupplie,contactPhone, sDateInitial, sDateUpdate) VALUES (?,?,?, ?, ?, ?, ?); ",
       [
         req.body.nameSupplie,
         req.body.FkBusinessType,
         req.body.FkClasification,
+        req.body.emailSupplie,
+        req.body.contactPhone,
         date(),
         date(),
       ]
