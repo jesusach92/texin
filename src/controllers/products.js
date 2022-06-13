@@ -5,7 +5,7 @@ export const productlist = async (req, res) => {
     try {
       const db = await connect();
       const [rows] = await db.query(
-        "SELECT idProduct,productName,descriptionProduct,nameTechnology FROM products INNER JOIN technologies ON FkTechnologyPro= idTechnology;"
+        "SELECT idProduct,productName,descriptionProduct,nameTechnology,userRegister FROM products INNER JOIN technologies ON FkTechnologyPro= idTechnology;"
       );
       if (!rows.length) {
         res.json([]);
@@ -36,34 +36,18 @@ export const productlist = async (req, res) => {
     }
   };
   
-  //3.- Devolver todos los proveedores que tienen en venta 1 producto
-  export const productSupplies = async (req, res) => {
-    try {
-      const db = await connect();
-      const [rows] = await db.query(
-        "SELECT * FROM supply  INNER JOIN supplie ON FkSupplieSpy = idSupplie WHERE FkProductSpy=? ORDER BY pDateUpdate;",
-        [req.params.id]
-      );
-      if (!rows.length) {
-        res.json([]);
-      } else {
-        res.json(rows);
-      }
-      db.end();
-    } catch (e) {
-      console.log(e);
-    }
-  };
+ 
   // 2.-Agregar Producto
   export const addProduct = async (req, res) => {
     try {
       const db = await connect();
       const [rows] = await db.query(
-        "INSERT INTO products (FkTechnologyPro, productName, descriptionProduct) VALUES (?, ?, ?);",
+        "Call InProduct(?,?,?,?);",
         [
           req.body.FkTechnologyPro,
           req.body.productName,
           req.body.descriptionProduct,
+          req.body.userRegister
         ]
       );
       res.json({ insertId: rows.insertId, value: 1 });

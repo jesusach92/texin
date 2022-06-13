@@ -1,9 +1,13 @@
 import { Router } from "express";
-import {AsingProductSupplie, deleteSupply, EditSupply, GetSupply, supplieProducts} from "../controllers/supplys"
+import {AsingProductSupplie, deleteSupply, EditSupply, GetSupply, productSupplies, supplieProducts} from "../controllers/supplys"
 const router = Router();
 
+
+//Devuelve todos los provedores del producto
+router.get("/:id", productSupplies);
+
 //Obtiene la relacion entre proveedor y producto
-router.get("/:id", GetSupply);
+router.get("/supply/:id", GetSupply);
 
 // Obtiene todos los productos del Proveedor
 router.get("/supplie/:id", supplieProducts);

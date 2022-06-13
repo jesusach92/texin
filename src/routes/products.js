@@ -10,7 +10,6 @@ router.get("/", productlist);
 // Mostrar datos de producto por Id
 router.get("/:id", productId);
 
-router.get("/Proveedores/:id", productSupplies);
 
 //Agregar producto sin relacion
 router.post("/", addProduct);

@@ -1,4 +1,5 @@
 import { connect } from "../database/database";
+import {UpdateSup} from "./supplies"
 
 export const adressContact = async (req, res) => {
   try {

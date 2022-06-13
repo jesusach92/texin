@@ -1,4 +1,5 @@
 import { connect } from "../database/database";
+import {date} from "../controllers/supplies"
 
 /**
  * "I want to get all the products that are related to a specific supplier"
@@ -13,6 +14,7 @@ export const supplieProducts = async (req, res) => {
       "SELECT * FROM supply t1 JOIN products t2 JOIN technologies t3 ON t1.FkProductSpy = t2.idProduct AND t2.FkTechnologyPro = t3.idTechnology WHERE t1.FkSupplieSpy=?;",
       [req.params.id]
     );
+    console.log(rows)
     if (!rows.length) {
       res.json([]);
     } else {
@@ -117,7 +119,26 @@ export const GetSupply = async (req, res) => {
     const [rows] = await db.query("SELECT * FROM supply WHERE idSupply=?;", [
       req.params.id,
     ]);
-    rows.length > 0 ? res.json(rows) : res.json({ value: 0 });
+    rows.length > 0 ? res.json(rows) : res.json([]);
+    db.end();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+ //3.- Devolver todos los proveedores que tienen en venta 1 producto
+ export const productSupplies = async (req, res) => {
+  try {
+    const db = await connect();
+    const [rows] = await db.query(
+      "SELECT * FROM supply  INNER JOIN supplie ON FkSupplieSpy = idSupplie WHERE FkProductSpy=? ORDER BY pDateUpdate;",
+      [req.params.id]
+    );
+    if (!rows.length) {
+      res.json([]);
+    } else {
+      res.json(rows);
+    }
     db.end();
   } catch (e) {
     console.log(e);

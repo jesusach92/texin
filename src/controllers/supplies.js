@@ -60,21 +60,25 @@ export const supplieById = async (req, res) => {
 export const addSupplie = async (req, res) => {
   try {
     const db = await connect();
-    const [rows] = await db.query(
-      "INSERT INTO supplie (nameSupplie, FkBusinessType, FkClasification,emailSupplie,contactPhone, sDateInitial, sDateUpdate) VALUES (?,?,?, ?, ?, ?, ?); ",
+    const [[[{idSupplie}]]] = await db.query(
+      "Call InSupplie(?,?,?,?,?,?,?,?,?,?)",
       [
         req.body.nameSupplie,
         req.body.FkBusinessType,
         req.body.FkClasification,
+        date(),
+        date(),
         req.body.emailSupplie,
         req.body.contactPhone,
-        date(),
-        date(),
+        req.body.userRegister,
+        req.body.userUpdate,
+        req.body.webPage
       ]
     );
-    res.json({ insertId: rows.insertId, value: 1 });
+    res.json({ idSupplie, value: 1 });
     db.end();
   } catch (e) {
+    console.log(e)
     res.json({ value: 0 });
   }
 };
@@ -83,19 +87,23 @@ export const addSupplie = async (req, res) => {
 export const EditSupplie = async (req, res) => {
   try {
     const db = await connect();
-    const [rows] = await db.query(
-      "UPDATE supplie SET nameSupplie =?, FKBusinessType =?, FkClasification=?,sDateUpdate =?, emailSupplie = ?, contactPhone = ? WHERE idSupplie =?;",
+    console.log(req.body)
+    const [[[rows]]] = await db.query(
+      "Call updateSupplie(?,?,?,?,?,?,?,?,?);",
       [
+        req.body.idSupplie,
         req.body.nameSupplie,
         req.body.FkBusinessType,
         req.body.FkClasification,
         date(),
         req.body.emailSupplie,
         req.body.contactPhone,
-        req.body.idSupplie,
+        req.body.userUpdate,
+        req.body.webPage
       ]
     );
-    if (rows.affectedRows > 0) {
+    console.log(rows)
+    if (rows?.message) {
       res.json({value: 1, message:"La actualizacion fue realizada correctamente"});
     } else {
       res.json({value:0, messaje:"No se realizo la actualizacion"});
