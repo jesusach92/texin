@@ -1,5 +1,5 @@
 import { connect } from "../database/database";
-import {UpdateSup} from "./supplies"
+import {UpdateSup, date} from "./supplies"
 
 export const adressContact = async (req, res) => {
   try {

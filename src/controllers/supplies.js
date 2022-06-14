@@ -60,7 +60,7 @@ export const supplieById = async (req, res) => {
 export const addSupplie = async (req, res) => {
   try {
     const db = await connect();
-    const [[[{idSupplie}]]] = await db.query(
+    const [[[{ idSupplie }]]] = await db.query(
       "Call InSupplie(?,?,?,?,?,?,?,?,?,?)",
       [
         req.body.nameSupplie,
@@ -72,13 +72,13 @@ export const addSupplie = async (req, res) => {
         req.body.contactPhone,
         req.body.userRegister,
         req.body.userUpdate,
-        req.body.webPage
+        req.body.webPage,
       ]
     );
     res.json({ idSupplie, value: 1 });
     db.end();
   } catch (e) {
-    console.log(e)
+    console.log(e);
     res.json({ value: 0 });
   }
 };
@@ -87,7 +87,6 @@ export const addSupplie = async (req, res) => {
 export const EditSupplie = async (req, res) => {
   try {
     const db = await connect();
-    console.log(req.body)
     const [[[rows]]] = await db.query(
       "Call updateSupplie(?,?,?,?,?,?,?,?,?);",
       [
@@ -99,14 +98,16 @@ export const EditSupplie = async (req, res) => {
         req.body.emailSupplie,
         req.body.contactPhone,
         req.body.userUpdate,
-        req.body.webPage
+        req.body.webPage,
       ]
     );
-    console.log(rows)
     if (rows?.message) {
-      res.json({value: 1, message:"La actualizacion fue realizada correctamente"});
+      res.json({
+        value: 1,
+        message: "La actualizacion fue realizada correctamente",
+      });
     } else {
-      res.json({value:0, messaje:"No se realizo la actualizacion"});
+      res.json({ value: 0, messaje: "No se realizo la actualizacion" });
     }
     db.end();
   } catch (e) {
