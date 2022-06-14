@@ -20,4 +20,5 @@ router.put("/", editProduct);
 // Borrar producto y su relacion con los proveedores
 router.delete("/:id", deleteProduct);
 
-module.exports = router
+
+export  {router}

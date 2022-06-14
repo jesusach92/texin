@@ -15,4 +15,4 @@ router.put("/", EditAdress);
 // Borrar Domicilios
 router.delete("/", deleteAdress);
 
-module.exports = router
+export  {router}

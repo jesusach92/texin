@@ -33,7 +33,6 @@ router.get("/SClasification", listSClasificacion);
 //Metodo para que regresa los tipos de tecnolocia que existen
 router.get("/Tech", listTech);
 
-
 //Agregar tipo de domicilio
 router.post("/AdresType", addaType);
 
@@ -73,6 +72,4 @@ router.delete("/SClasification/:id", deleteSclasification);
 /* Deleting the technology. */
 router.delete("/Tech/:id", deleteTechnology);
 
-
-
-module.exports = router;
+export  {router}

@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.getRoleUser = exports.getListUsers = exports.deleteUSer = exports.addUser = void 0;
+exports.productlist = exports.productId = exports.editProduct = exports.deleteProduct = exports.addProduct = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -15,8 +15,8 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _database = require("../database/database");
 
-// Metodo para Listar Usuarios con Id, Nombre de Usuario, Rol de Usuario y Nombre de Persona
-var getListUsers = /*#__PURE__*/function () {
+// 1.- Listar productos con tecnologia, despripcion y nombre
+var productlist = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
     var db, _yield$db$query, _yield$db$query2, rows;
 
@@ -31,22 +31,29 @@ var getListUsers = /*#__PURE__*/function () {
           case 3:
             db = _context.sent;
             _context.next = 6;
-            return db.query("SELECT idUsers, nameUser, namePerson,FkRole ,idRole, nameRole, privileges FROM users inner join role on FkRole= idRole;");
+            return db.query("SELECT idProduct,productName,descriptionProduct,nameTechnology,userRegister FROM products INNER JOIN technologies ON FkTechnologyPro= idTechnology;");
 
           case 6:
             _yield$db$query = _context.sent;
             _yield$db$query2 = (0, _slicedToArray2["default"])(_yield$db$query, 1);
             rows = _yield$db$query2[0];
-            res.json(rows);
+
+            if (!rows.length) {
+              res.json([]);
+            } else {
+              res.json(rows);
+            }
+
             db.end();
-            _context.next = 15;
+            _context.next = 16;
             break;
 
           case 13:
             _context.prev = 13;
             _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
 
-          case 15:
+          case 16:
           case "end":
             return _context.stop();
         }
@@ -54,15 +61,15 @@ var getListUsers = /*#__PURE__*/function () {
     }, _callee, null, [[0, 13]]);
   }));
 
-  return function getListUsers(_x, _x2) {
+  return function productlist(_x, _x2) {
     return _ref.apply(this, arguments);
   };
-}(); // Metodo de Borrado de Usuarios
+}(); // 2.-Devolver producto por id
 
 
-exports.getListUsers = getListUsers;
+exports.productlist = productlist;
 
-var deleteUSer = /*#__PURE__*/function () {
+var productId = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res) {
     var db, _yield$db$query3, _yield$db$query4, rows;
 
@@ -77,41 +84,45 @@ var deleteUSer = /*#__PURE__*/function () {
           case 3:
             db = _context2.sent;
             _context2.next = 6;
-            return db.query("DELETE FROM users WHERE idUsers=?", [req.params.id]);
+            return db.query("SELECT * FROM products INNER JOIN technologies ON FkTechnologyPro= idTechnology WHERE idProduct=?;", [req.params.id]);
 
           case 6:
             _yield$db$query3 = _context2.sent;
             _yield$db$query4 = (0, _slicedToArray2["default"])(_yield$db$query3, 1);
             rows = _yield$db$query4[0];
-            rows.affectedRows > 0 ? res.json({
-              value: 1
-            }) : res.json({
-              value: 0
-            });
-            _context2.next = 14;
+
+            if (!rows.length) {
+              res.json([]);
+            } else {
+              res.json(rows);
+            }
+
+            db.end();
+            _context2.next = 16;
             break;
 
-          case 12:
-            _context2.prev = 12;
+          case 13:
+            _context2.prev = 13;
             _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
 
-          case 14:
+          case 16:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 12]]);
+    }, _callee2, null, [[0, 13]]);
   }));
 
-  return function deleteUSer(_x3, _x4) {
+  return function productId(_x3, _x4) {
     return _ref2.apply(this, arguments);
   };
-}(); // Metodo para obtener Roles de Usuario
+}(); // 2.-Agregar Producto
 
 
-exports.deleteUSer = deleteUSer;
+exports.productId = productId;
 
-var getRoleUser = /*#__PURE__*/function () {
+var addProduct = /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res) {
     var db, _yield$db$query5, _yield$db$query6, rows;
 
@@ -126,39 +137,44 @@ var getRoleUser = /*#__PURE__*/function () {
           case 3:
             db = _context3.sent;
             _context3.next = 6;
-            return db.query("select * from role;");
+            return db.query("Call InProduct(?,?,?,?);", [req.body.FkTechnologyPro, req.body.productName, req.body.descriptionProduct, req.body.userRegister]);
 
           case 6:
             _yield$db$query5 = _context3.sent;
             _yield$db$query6 = (0, _slicedToArray2["default"])(_yield$db$query5, 1);
             rows = _yield$db$query6[0];
-            res.json(rows);
-            _context3.next = 14;
+            res.json({
+              insertId: rows.insertId,
+              value: 1
+            });
+            db.end();
+            _context3.next = 16;
             break;
 
-          case 12:
-            _context3.prev = 12;
+          case 13:
+            _context3.prev = 13;
             _context3.t0 = _context3["catch"](0);
+            console.log(_context3.t0);
 
-          case 14:
+          case 16:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 12]]);
+    }, _callee3, null, [[0, 13]]);
   }));
 
-  return function getRoleUser(_x5, _x6) {
+  return function addProduct(_x5, _x6) {
     return _ref3.apply(this, arguments);
   };
-}(); //Agregar Usuario
+}(); //2.-Editar Producto
 
 
-exports.getRoleUser = getRoleUser;
+exports.addProduct = addProduct;
 
-var addUser = /*#__PURE__*/function () {
+var editProduct = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res) {
-    var db, _yield$db$query7, _yield$db$query8, rows, result;
+    var db, _yield$db$query7, _yield$db$query8, rows;
 
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
@@ -171,71 +187,45 @@ var addUser = /*#__PURE__*/function () {
           case 3:
             db = _context4.sent;
             _context4.next = 6;
-            return db.query("SELECT * FROM users WHERE nameUser =?;", [req.body.nameUser]);
+            return db.query("UPDATE products SET FkTechnologyPro = ?, productName=?, descriptionProduct=? WHERE idProduct=?;", [req.body.FkTechnologyPro, req.body.productName, req.body.descriptionProduct, req.body.idProduct]);
 
           case 6:
             _yield$db$query7 = _context4.sent;
             _yield$db$query8 = (0, _slicedToArray2["default"])(_yield$db$query7, 1);
             rows = _yield$db$query8[0];
 
-            if (!(rows.length > 0)) {
-              _context4.next = 13;
-              break;
+            if (rows.affectedRows > 0) {
+              res.send("La actualizacion fue realizada correctamente");
+            } else {
+              res.send("No se realizo la actualizacion");
             }
 
-            res.json({
-              value: 1,
-              message: "El Nombre de Usuario ya esta registrado"
-            });
-            _context4.next = 17;
+            db.end();
+            _context4.next = 16;
             break;
 
           case 13:
-            _context4.next = 15;
-            return db.query("INSERT INTO users (FkRole,nameUser,passwordUser,namePerson) values (?,?,md5(?),?);", [req.body.FkRole, req.body.nameUser, req.body.passwordUser, req.body.namePerson]);
-
-          case 15:
-            result = _context4.sent;
-
-            if (result.affectedRows !== 0) {
-              res.json({
-                value: 1,
-                message: "Usuario registrado exitosamente"
-              });
-            } else {
-              res.json({
-                value: 0,
-                message: "error de registro"
-              });
-            }
-
-          case 17:
-            db.end();
-            _context4.next = 23;
-            break;
-
-          case 20:
-            _context4.prev = 20;
+            _context4.prev = 13;
             _context4.t0 = _context4["catch"](0);
             console.log(_context4.t0);
 
-          case 23:
+          case 16:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[0, 20]]);
+    }, _callee4, null, [[0, 13]]);
   }));
 
-  return function addUser(_x7, _x8) {
+  return function editProduct(_x7, _x8) {
     return _ref4.apply(this, arguments);
   };
-}(); // Actualizar Usuario
+}(); //3.- Eliminar Producto
 
 
-exports.addUser = addUser;
+exports.editProduct = editProduct;
 
-var updateUser = /*#__PURE__*/function () {
+var deleteProduct = /*#__PURE__*/function () {
   var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res) {
     var db, _yield$db$query9, _yield$db$query10, rows;
 
@@ -250,36 +240,39 @@ var updateUser = /*#__PURE__*/function () {
           case 3:
             db = _context5.sent;
             _context5.next = 6;
-            return db.query("UPDATE users set FkRole=?, nameUser=?,passwordUser=md5(?) , namePerson=? WHERE idUsers=?;", [req.body.FkRole, req.body.nameUser, req.body.passwordUser, req.body.namePerson, req.body.idUsers]);
+            return db.query("DELETE FROM products WHERE idProduct=?;", [req.params.id]);
 
           case 6:
             _yield$db$query9 = _context5.sent;
             _yield$db$query10 = (0, _slicedToArray2["default"])(_yield$db$query9, 1);
             rows = _yield$db$query10[0];
-            rows.affectedRows > 0 ? res.json({
-              value: 1
-            }) : res.json({
-              value: 0
-            });
-            _context5.next = 15;
+
+            if (rows.affectedRows > 0) {
+              res.send("Producto Eliminado con Exito");
+            } else {
+              res.send("No se pudo eliminar el producto");
+            }
+
+            db.end();
+            _context5.next = 16;
             break;
 
-          case 12:
-            _context5.prev = 12;
+          case 13:
+            _context5.prev = 13;
             _context5.t0 = _context5["catch"](0);
             console.log(_context5.t0);
 
-          case 15:
+          case 16:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5, null, [[0, 12]]);
+    }, _callee5, null, [[0, 13]]);
   }));
 
-  return function updateUser(_x9, _x10) {
+  return function deleteProduct(_x9, _x10) {
     return _ref5.apply(this, arguments);
   };
 }();
 
-exports.updateUser = updateUser;
+exports.deleteProduct = deleteProduct;

@@ -7,4 +7,5 @@ router.post("/", serchUser);
 
 router.get("/logout")
 
-module.exports= router
+
+export  {router}

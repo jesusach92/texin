@@ -18,4 +18,5 @@ router.put("/", EditSupplie);
 // Borrar Proveedor
 router.delete("/:id", deleteSupplie);
 
-module.exports = router
+
+export  {router}

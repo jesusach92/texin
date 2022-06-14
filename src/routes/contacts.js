@@ -13,4 +13,4 @@ router.put("/", EditContact);
 //Borrar contacto de domicilio
 router.delete("/:id", deleteContact);
 
-module.exports = router
+export {router}

@@ -21,4 +21,5 @@ router.put("/", EditSupply);
 // Borrar Relacion Proveedor-Producto
 router.delete("/:id", deleteSupply);
 
-module.exports = router;
+
+export  {router}
