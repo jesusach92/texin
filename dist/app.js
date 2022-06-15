@@ -15,7 +15,7 @@ var _morgan = _interopRequireDefault(require("morgan"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
-var _adress = require("./routes/adress");
+var _routes = _interopRequireDefault(require("./routes"));
 
 var app = (0, _express["default"])();
 
@@ -24,6 +24,6 @@ _dotenv["default"].config();
 app.use((0, _morgan["default"])("dev"));
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
-app.use("/", _adress.router);
+app.use("/", _routes["default"]);
 var _default = app;
 exports["default"] = _default;

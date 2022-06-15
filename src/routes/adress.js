@@ -1,18 +1,18 @@
 import { Router } from "express";
 import { addAdress, deleteAdress, EditAdress, supplieFullAdress } from "../controllers/adress";
-const router = Router();
+const adressRouter = Router();
 
 
 //Obtiene todos los domicilios del proveedor
-router.get("/:id", supplieFullAdress);
+adressRouter.get("/:id", supplieFullAdress);
 
 //Agrega domicilio a Proveedore devuelve el ID del nuevo domicilio
-router.post("/", addAdress);
+adressRouter.post("/", addAdress);
 
 //Actualiza el Domicilio y la fecha de Actualizacion del proveedor
-router.put("/", EditAdress);
+adressRouter.put("/", EditAdress);
 
 // Borrar Domicilios
-router.delete("/", deleteAdress);
+adressRouter.delete("/", deleteAdress);
 
-export  {router}
+export default adressRouter

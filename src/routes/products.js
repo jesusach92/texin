@@ -1,24 +1,24 @@
 import { Router } from "express";
-const router = Router();
+const productsRouter = Router();
 import {addProduct, deleteProduct, editProduct, productId, productlist, productSupplies} from "../controllers/products"
 
 // Metodos de Productos
 
 // Listar productos con Nombre del producto, tecnologia, descripcion
-router.get("/", productlist);
+productsRouter.get("/", productlist);
 
 // Mostrar datos de producto por Id
-router.get("/:id", productId);
+productsRouter.get("/:id", productId);
 
 
 //Agregar producto sin relacion
-router.post("/", addProduct);
+productsRouter.post("/", addProduct);
 
 // Actualizar campos del producto
-router.put("/", editProduct);
+productsRouter.put("/", editProduct);
 
 // Borrar producto y su relacion con los proveedores
-router.delete("/:id", deleteProduct);
+productsRouter.delete("/:id", deleteProduct);
 
 
-export  {router}
+export default productsRouter
