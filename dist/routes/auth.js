@@ -9,9 +9,9 @@ var _express = require("express");
 
 var _auth = require("../controllers/auth");
 
-var authRouter = (0, _express.Router)(); //Autenticar Usuario
+var routes = (0, _express.Router)(); //Autenticar Usuario
 
-authRouter.post("/", _auth.serchUser);
-authRouter.get("/logout");
-var _default = authRouter;
+routes.post("/", _auth.serchUser);
+routes.get("/logout");
+var _default = routes;
 exports["default"] = _default;

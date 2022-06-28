@@ -17,7 +17,7 @@ router.use(`/config`, configRouter);
 router.use(`/contacts`, contactsRouter);
 router.use(`/products`, productsRouter);
 router.use(`/supplies`, suppliesRouter);
-router.use(`/supplys`, suppliesRouter);
+router.use(`/supplys`, supplysRouter);
 router.use(`/users`, userRouter);
 
 /**
@@ -37,20 +37,19 @@ router.use(`/users`, userRouter);
 // other files in the directory. */
 
 // const routes = fs.readdirSync(pathRouter)
-//   .filter((file) => file !== "index.js")
-//   .map((file) =>
-//     removeExtension(file)
-//   );
-//   console.log(routes)
-//.filter((file) => {
+//   // .filter((file) => file !== "index.js")
+//   // .map((file) =>
+//   //   removeExtension(file)
+//   // )
+// .filter((file) => {
 //   const fileWithOutExt = removeExtension(file);
 //   const skip = ["index"].includes(fileWithOutExt);
 //   if (!skip) {
-//     // import(`./${fileWithOutExt}`)
-//     //   .then((module) => {
-//     //     router.use(`/${fileWithOutExt}`, module.router);
-//     //   })
-//     //   .catch(console.error);
+//     import(`./${fileWithOutExt}.js`)
+//       .then((module) => {
+//         router.use(`/${fileWithOutExt}`, module.default);
+//       })
+//       .catch(console.error);
 //   }
 // });
 
@@ -61,5 +60,6 @@ router.get("*", (req, res) => {
   res.status(404);
   res.send({ error: "Not Found" });
 });
+
 
 export default router;

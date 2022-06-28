@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { serchUser } from "../controllers/auth";
-const authRouter = Router();
+const routes = Router();
 
 //Autenticar Usuario
-authRouter.post("/", serchUser);
+routes.post("/", serchUser);
 
-authRouter.get("/logout")
+routes.get("/logout")
 
 
-export default authRouter
+export default routes

@@ -9,18 +9,18 @@ var _express = require("express");
 
 var _supplys = require("../controllers/supplys");
 
-var supplysRouter = (0, _express.Router)(); //Devuelve todos los provedores del producto
+var routes = (0, _express.Router)(); //Devuelve todos los provedores del producto
 
-supplysRouter.get("/:id", _supplys.productSupplies); //Obtiene la relacion entre proveedor y producto
+routes.get("/:id", _supplys.productSupplies); //Obtiene la relacion entre proveedor y producto
 
-supplysRouter.get("/supply/:id", _supplys.GetSupply); // Obtiene todos los productos del Proveedor
+routes.get("/supply/:id", _supplys.GetSupply); // Obtiene todos los productos del Proveedor
 
-supplysRouter.get("/supplie/:id", _supplys.supplieProducts); //Asigna un producto que ya existe a un proveedor
+routes.get("/supplie/:id", _supplys.supplieProducts); //Asigna un producto que ya existe a un proveedor
 
-supplysRouter.post("/", _supplys.AsingProductSupplie); // Actualiza la relacion entre proveedor y Producto
+routes.post("/", _supplys.AsingProductSupplie); // Actualiza la relacion entre proveedor y Producto
 
-supplysRouter.put("/", _supplys.EditSupply); // Borrar Relacion Proveedor-Producto
+routes.put("/", _supplys.EditSupply); // Borrar Relacion Proveedor-Producto
 
-supplysRouter["delete"]("/:id", _supplys.deleteSupply);
-var _default = supplysRouter;
+routes["delete"]("/:id", _supplys.deleteSupply);
+var _default = routes;
 exports["default"] = _default;

@@ -1,5 +1,5 @@
 import { Router } from "express";
-const configRouter = Router();
+const routes = Router();
 import {
   addaType,
   addBusinessType,
@@ -22,54 +22,54 @@ import {
 // Metodos de Configuracion
 
 //Metodo que devuelve los tipos de domicilio
-configRouter.get("/AdresType", listAType);
+routes.get("/AdresType", listAType);
 
 //Metodo que devuelve los tipos de negocios
-configRouter.get("/BusinessType", listBusiness);
+routes.get("/BusinessType", listBusiness);
 
 // Metodo que devuelve las clasificaciones de un proveedor
-configRouter.get("/SClasification", listSClasificacion);
+routes.get("/SClasification", listSClasificacion);
 
 //Metodo para que regresa los tipos de tecnolocia que existen
-configRouter.get("/Tech", listTech);
+routes.get("/Tech", listTech);
 
 //Agregar tipo de domicilio
-configRouter.post("/AdresType", addaType);
+routes.post("/AdresType", addaType);
 
 //Metodo para agregar tipo de negocio
-configRouter.post("/BusinessType", addBusinessType);
+routes.post("/BusinessType", addBusinessType);
 
 // Metodo para agregar clasificacion de proveedor
-configRouter.post("/SClasification", addsClasification);
+routes.post("/SClasification", addsClasification);
 
 //Metodo para agregar Tecnologia del producto
-configRouter.post("/Tech", addTechnology);
+routes.post("/Tech", addTechnology);
 
 
 //Ruta para Actualizar Tipo de Domicilio
-configRouter.put("/AdresType", updateAddType);
+routes.put("/AdresType", updateAddType);
 
 // Metodo de Actualizacion de Tipos de Negocio
-configRouter.put("/BusinessType", updateBusinessType);
+routes.put("/BusinessType", updateBusinessType);
 
 // Ruta para Actualizar Clasificacion de Proveedor
-configRouter.put("/SClasification", UpdatesClasification);
+routes.put("/SClasification", UpdatesClasification);
 
 // Ruta para Actualizar el tipo de Tenologia
-configRouter.put("/Tech", UpdateTechnology);
+routes.put("/Tech", UpdateTechnology);
 
 
 //Ruta para borrar tipo de domicilio
-configRouter.delete("/AdresType/:id", deleteAddType);
+routes.delete("/AdresType/:id", deleteAddType);
 
 // Metodo para eliminar tipo de negocio
-configRouter.delete("/BusinessType/:id", deleteBusinessType);
+routes.delete("/BusinessType/:id", deleteBusinessType);
 
 // Ruta para borrar clasificacion de proveedor
-configRouter.delete("/SClasification/:id", deleteSclasification);
+routes.delete("/SClasification/:id", deleteSclasification);
 
 //Ruta para borrar tecnologia
 /* Deleting the technology. */
-configRouter.delete("/Tech/:id", deleteTechnology);
+routes.delete("/Tech/:id", deleteTechnology);
 
-export default configRouter
+export default routes

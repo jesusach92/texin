@@ -1,22 +1,22 @@
 import { Router } from "express";
 import {addSupplie, deleteSupplie, EditSupplie, supplieById, supplielist} from "../controllers/supplies"
-const suppliesRouter = Router();
+const routes = Router();
 
 // Lista a todos los proveedores con tipo de negocio y clasificacion
-suppliesRouter.get("/", supplielist);
+routes.get("/", supplielist);
 
 //obtiene los datos del proveedor que corresponde al ID
-suppliesRouter.get("/:id", supplieById);
+routes.get("/:id", supplieById);
 
 // Agrega Proveedor devuelve el ID del proveedor nuevo
-suppliesRouter.post("/", addSupplie);
+routes.post("/", addSupplie);
 
 // Actualiza los datos del proveedor y Fecha de Modificacion
 
-suppliesRouter.put("/", EditSupplie);
+routes.put("/", EditSupplie);
 
 // Borrar Proveedor
-suppliesRouter.delete("/:id", deleteSupplie);
+routes.delete("/:id", deleteSupplie);
 
 
-export default suppliesRouter
+export default routes

@@ -52,20 +52,19 @@ router.use("/users", _users["default"]);
 // /* Reading the directory of the current file, filtering out the index file, and then requiring all the
 // other files in the directory. */
 // const routes = fs.readdirSync(pathRouter)
-//   .filter((file) => file !== "index.js")
-//   .map((file) =>
-//     removeExtension(file)
-//   );
-//   console.log(routes)
-//.filter((file) => {
+//   // .filter((file) => file !== "index.js")
+//   // .map((file) =>
+//   //   removeExtension(file)
+//   // )
+// .filter((file) => {
 //   const fileWithOutExt = removeExtension(file);
 //   const skip = ["index"].includes(fileWithOutExt);
 //   if (!skip) {
-//     // import(`./${fileWithOutExt}`)
-//     //   .then((module) => {
-//     //     router.use(`/${fileWithOutExt}`, module.router);
-//     //   })
-//     //   .catch(console.error);
+//     import(`./${fileWithOutExt}.js`)
+//       .then((module) => {
+//         router.use(`/${fileWithOutExt}`, module.default);
+//       })
+//       .catch(console.error);
 //   }
 // });
 

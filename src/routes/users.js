@@ -1,26 +1,26 @@
 import { Router } from "express";
 import {addUser, deleteUSer, getListUsers, getRoleUser, serchUser, updateUser, userRegister} from "../controllers/users"
 import {getDataAdmin} from "../controllers/config"
-const usersRouter = Router();
+const routes = Router();
 
 
 //Obtener Data para el Usuario
-usersRouter.get("/DataAdmin", getDataAdmin);
+routes.get("/DataAdmin", getDataAdmin);
 
 //Obtener Lista de Usuarios para Admin
-usersRouter.get("/UsersAdmin", getListUsers);
+routes.get("/UsersAdmin", getListUsers);
 // Registrar Usuario
 
 // Obtener los Roles a Asignar
-usersRouter.get("/Roles",getRoleUser)
+routes.get("/Roles",getRoleUser)
 
 //Registrar Usuario
-usersRouter.post("/", addUser)
+routes.post("/", addUser)
 
 //Borrar Usuario
-usersRouter.delete("/:id", deleteUSer);
+routes.delete("/:id", deleteUSer);
 
 //Actualizar Usuario
-usersRouter.put("/",updateUser)
+routes.put("/",updateUser)
 
-export default usersRouter
+export default routes

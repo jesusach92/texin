@@ -14,7 +14,6 @@ export const supplieProducts = async (req, res) => {
       "SELECT * FROM supply t1 JOIN products t2 JOIN technologies t3 ON t1.FkProductSpy = t2.idProduct AND t2.FkTechnologyPro = t3.idTechnology WHERE t1.FkSupplieSpy=?;",
       [req.params.id]
     );
-    console.log(rows)
     if (!rows.length) {
       res.json([]);
     } else {
@@ -40,7 +39,7 @@ export const AsingProductSupplie = async (req, res) => {
       [rows] = await db.query(
         "INSERT INTO supply (FkSupplieSpy, FkProductSpy, price, divisa , deliveryTime, productLine, comments, pDateInitial, pDateUpdate, pSampleF, pSampleLocation) VALUES (?,?,?,?,?,?,?,?,?,?,?);",
         [
-          req.body.FkSupplieSpy,
+          req.body. FkSupplieSpy,
           req.body.FkProductSpy,
           req.body.price,
           req.body.divisa,

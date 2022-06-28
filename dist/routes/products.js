@@ -9,17 +9,17 @@ var _express = require("express");
 
 var _products = require("../controllers/products");
 
-var productsRouter = (0, _express.Router)();
+var routes = (0, _express.Router)();
 // Metodos de Productos
 // Listar productos con Nombre del producto, tecnologia, descripcion
-productsRouter.get("/", _products.productlist); // Mostrar datos de producto por Id
+routes.get("/", _products.productlist); // Mostrar datos de producto por Id
 
-productsRouter.get("/:id", _products.productId); //Agregar producto sin relacion
+routes.get("/:id", _products.productId); //Agregar producto sin relacion
 
-productsRouter.post("/", _products.addProduct); // Actualizar campos del producto
+routes.post("/", _products.addProduct); // Actualizar campos del producto
 
-productsRouter.put("/", _products.editProduct); // Borrar producto y su relacion con los proveedores
+routes.put("/", _products.editProduct); // Borrar producto y su relacion con los proveedores
 
-productsRouter["delete"]("/:id", _products.deleteProduct);
-var _default = productsRouter;
+routes["delete"]("/:id", _products.deleteProduct);
+var _default = routes;
 exports["default"] = _default;
