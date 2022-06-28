@@ -32,6 +32,7 @@ export const serchUser = async (req, res) => {
       db.end();
     } catch (e) {
       console.log(e);
+      res.status(500).send("Error de Servidor contacta con tu administrador de sistema")
     }
   };
   
