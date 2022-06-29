@@ -72,15 +72,16 @@ var serchUser = /*#__PURE__*/function () {
 
           case 21:
             db.end();
-            _context.next = 27;
+            _context.next = 28;
             break;
 
           case 24:
             _context.prev = 24;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
+            res.status(500).send("Error de Servidor contacta con tu administrador de sistema");
 
-          case 27:
+          case 28:
           case "end":
             return _context.stop();
         }

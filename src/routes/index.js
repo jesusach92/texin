@@ -8,6 +8,7 @@ import productsRouter from "./products";
 import supplysRouter from "./supplys";
 import userRouter from "./users";
 import contactsRouter from "./contacts"
+import FilesRouter from "./files"
 const router = Router();
 
 /* Importing the routes from the other files. */
@@ -19,7 +20,7 @@ router.use(`/products`, productsRouter);
 router.use(`/supplies`, suppliesRouter);
 router.use(`/supplys`, supplysRouter);
 router.use(`/users`, userRouter);
-
+router.use('/files',FilesRouter)
 /**
  * It takes a file name as a string, splits it into an array of strings, and returns the first element
  * of that array.

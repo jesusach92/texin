@@ -27,6 +27,8 @@ var _users = _interopRequireDefault(require("./users"));
 
 var _contacts = _interopRequireDefault(require("./contacts"));
 
+var _files = _interopRequireDefault(require("./files"));
+
 var router = (0, _express.Router)();
 /* Importing the routes from the other files. */
 
@@ -36,8 +38,9 @@ router.use("/config", _config["default"]);
 router.use("/contacts", _contacts["default"]);
 router.use("/products", _products["default"]);
 router.use("/supplies", _supplies["default"]);
-router.use("/supplys", _supplies["default"]);
+router.use("/supplys", _supplys["default"]);
 router.use("/users", _users["default"]);
+router.use('/files', _files["default"]);
 /**
  * It takes a file name as a string, splits it into an array of strings, and returns the first element
  * of that array.

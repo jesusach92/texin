@@ -61,7 +61,7 @@ export const addSupplie = async (req, res) => {
   try {
     const db = await connect();
     const [[[{ idSupplie }]]] = await db.query(
-      "Call InSupplie(?,?,?,?,?,?,?,?,?,?)",
+      "Call InSupplie(?,?,?,?,?,?,?,?,?,?,?)",
       [
         req.body.nameSupplie,
         req.body.FkBusinessType,
@@ -73,6 +73,7 @@ export const addSupplie = async (req, res) => {
         req.body.userRegister,
         req.body.userUpdate,
         req.body.webPage,
+        req.body.catalog
       ]
     );
     res.json({ idSupplie, value: 1 });
@@ -132,3 +133,4 @@ export const deleteSupplie = async (req, res) => {
     console.log(e);
   }
 };
+

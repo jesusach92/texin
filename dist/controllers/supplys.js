@@ -44,7 +44,6 @@ var supplieProducts = /*#__PURE__*/function () {
             _yield$db$query = _context.sent;
             _yield$db$query2 = (0, _slicedToArray2["default"])(_yield$db$query, 1);
             rows = _yield$db$query2[0];
-            console.log(rows);
 
             if (!rows.length) {
               res.json([]);
@@ -52,23 +51,23 @@ var supplieProducts = /*#__PURE__*/function () {
               res.json(rows);
             }
 
-            _context.next = 16;
+            _context.next = 15;
             break;
 
-          case 13:
-            _context.prev = 13;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](3);
             console.log(_context.t0);
 
-          case 16:
+          case 15:
             db.end();
 
-          case 17:
+          case 16:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[3, 13]]);
+    }, _callee, null, [[3, 12]]);
   }));
 
   return function supplieProducts(_x, _x2) {
