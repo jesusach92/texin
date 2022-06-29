@@ -3,3 +3,4 @@
 .env
 /Methods_http
 /dist
+/src/controllers/catalogs
